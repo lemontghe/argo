@@ -1,6 +1,5 @@
 from pathlib import Path
 from os import path, environ
-import os
 import dj_database_url
 import dotenv
 import django_heroku
@@ -10,44 +9,6 @@ SECRET_KEY = environ.get('SECRET_KEY')
 
 #  DEBUG = True
 DEBUG = False
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
-                       'pathname=%(pathname)s lineno=%(lineno)s '
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
 #  ALLOWED_HOSTS = ["example.com", "localhost"]
 ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1", "0.0.0.0"]
 INSTALLED_APPS = [
@@ -176,7 +137,7 @@ TAGGIT_CASE_INSENSITIVE = True
 dotenv_file = path.join(BASE_DIR, ".env")
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-django_heroku.settings(locals())
-#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
+#  django_heroku.settings(locals())
+django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
