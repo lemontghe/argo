@@ -119,7 +119,9 @@ MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+#  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CRISPY_TEMPLATE_PACK="bootstrap4"
 LOGIN_REDIRECT_URL = '/account/'
@@ -137,7 +139,7 @@ TAGGIT_CASE_INSENSITIVE = True
 dotenv_file = path.join(BASE_DIR, ".env")
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-#  django_heroku.settings(locals())
-django_heroku.settings(config=locals(), staticfiles=False,logging=False)
+django_heroku.settings(locals())
+#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
