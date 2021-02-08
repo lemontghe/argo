@@ -11,7 +11,7 @@ SECRET_KEY = 'vt22afw=$gh4@(*ks13d&ow2suoh=nn3apvpfx5*ce_ru(50m#'
 DEBUG = True
 #  DEBUG = False
 #  ALLOWED_HOSTS = ["example.com", "localhost"]
-#  ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1", "0.0.0.0"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
