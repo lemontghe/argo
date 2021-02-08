@@ -1,5 +1,6 @@
 from pathlib import Path
 from os import path, environ
+import os
 import dj_database_url
 import dotenv
 import django_heroku
@@ -9,6 +10,22 @@ SECRET_KEY = environ.get('SECRET_KEY')
 
 #  DEBUG = True
 DEBUG = False
+LOGGING = {
+   'version': 1,
+   'disable_existing_loggers': False,
+   'handlers': {
+       'console': {
+           'class': 'logging.StreamHandler',
+       },
+   }, 
+   'loggers': {
+       'django': {
+           'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+       },
+   },
+}
+
 #  ALLOWED_HOSTS = ["example.com", "localhost"]
 ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1", "0.0.0.0"]
 INSTALLED_APPS = [
