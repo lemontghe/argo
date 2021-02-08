@@ -4,7 +4,6 @@ django-heroku
 whitenoise
 dj-database-url
 
-Django==3.1.4
 django-appconf==1.0.4
 django-compressor==2.4
 django-crispy-forms==1.10.0
