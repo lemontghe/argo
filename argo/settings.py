@@ -8,10 +8,10 @@ SECRET_KEY = 'vt22afw=$gh4@(*ks13d&ow2suoh=nn3apvpfx5*ce_ru(50m#'
 #  SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#  DEBUG = True
-DEBUG = False
+DEBUG = True
+#  DEBUG = False
 #  ALLOWED_HOSTS = ["example.com", "localhost"]
-ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1"]
+#  ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'django.contrib.sites',
-    #  'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',
 ]
 
 STATICFILES_FINDERS = (
@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #  'whitenoise.runserver_nostatic',
     # 'django.middleware.security.SecurityMiddleware',
-    #  'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'argo.urls'
@@ -71,31 +71,31 @@ WSGI_APPLICATION = 'argo.wsgi.application'
 
 # Database
 
-#  DATABASES = {
-    #  'default': {
-        #  'ENGINE': 'django.db.backends.sqlite3',
-        #  'NAME': BASE_DIR / 'db.sqlite3',
-    #  }
-#  }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'argo',
-        'USER': 'le',
-        'PASSWORD': 'ytefastonsi',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
 #  DATABASES = {
     #  'default': {
+        #  'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #  'NAME': 'argo',
+        #  'USER': 'username',
+        #  'PASSWORD': 'password',
+        #  'HOST': 'localhost',
+        #  'PORT': '5432',
+    #  }
+#  }
+
+#  DATABASES = {
+    #  'default': {
         #  'ENGINE': 'django.db.backends.mysql',
-        #  'NAME': 'epiz_27686130_argo',
-        #  'USER': 'epiz_27686130',
-        #  'PASSWORD': 'egwat6ZVnn',
-        #  'HOST':'sql202.epizy.com',
+        #  'NAME': 'argo',
+        #  'USER': 'user',
+        #  'PASSWORD': 'pass',
+        #  'HOST':'sql202.asdfa.com',
         #  'PORT': '3306',
     #  }
 #  }
@@ -138,7 +138,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
