@@ -1,0 +1,253 @@
+{% load i18n static %}<!DOCTYPE html>
+{% load static %}
+{% load compress %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Get paid to view ads. As a member, you'll get paid for each click that you generate by browsing our sponsor's ads. Get a bonus every day.">
+    <meta name="keywords" content="Earnings on the internet, View ads, Earn money from survey, Get paid to view ads">
+    <meta name="author" content="ArgonClick">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon" type="image/png">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    {% compress css %}
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}" charset="utf-8">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="https://appsrv1-147a1.kxcdn.com/black-dashboard/css/nucleo-icons.min.css" type="text/css" charset="utf-8">
+    <!-- CSS Files-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/argon-dashboard.css' %}" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" charset="utf-8">
+    {% endcompress %}
+</head>
+{% load i18n %}
+
+<body class="">
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+  <div class="container-fluid"> 
+    <!-- toggler -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+    <!-- brand --> 
+    <a class="navbar-brand pt-0" href="{% url 'home_page' %}"> <img src="{% static 'img/blue.png' %}" class="navbar-brand-img" alt="..."> </a> 
+    <!-- user -->
+    <ul class="nav align-items-center d-md-none">
+      <li class="nav-item dropdown"> <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="media align-items-center"> <span class="avatar avatar-sm rounded-circle"> <img alt="image placeholder" src="{% static 'img/react.jpg' %}"> </span> </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+          <div class=" dropdown-header noti-title">
+            <h6 class="text-overflow m-0">welcome!</h6>
+          </div>
+          <a href="{% url 'account_page' %}" class="dropdown-item"> <i class="fa fa-user"></i> <span>my profile</span> </a> <a href="{% url 'settings_page' %}" class="dropdown-item"> <i class="fa fa-cog" aria-hidden="true"></i> <span>settings</span> </a> <a href="{% url 'stats_page' %}" class="dropdown-item"> <i class="fa fa-calendar-alt"></i> <span>statistics</span> </a> <a href="{% url 'contacts_page' %}" class="dropdown-item"> <i class="fa fa-life-ring"></i> <span>support</span> </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'exit_page' %}" class="dropdown-item"> <i class="fas fa-running"></i> <span>logout</span> </a> </div>
+      </li>
+    </ul>
+    <!-- collapse -->
+<div class="collapse navbar-collapse" id="sidenav-collapse-main"> 
+      <!-- collapse header -->
+      <div class="navbar-collapse-header d-md-none">
+        <div class="row">
+          <div class="col-6 collapse-brand"> <a href="/"> <img src="{% static 'img/blue.png' %}"> </a> </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="toggle sidenav"> <span></span> <span></span> </button>
+          </div>
+        </div>
+      </div>
+      <!-- form --> 
+      
+      <!-- navigation -->
+        <hr class="my--2">
+      <ul id="wallet-shopping" class="navbar-nav">
+          
+           <div class="text-center mt-4">
+                    <h3><i class="fas fa-wallet"></i> Balance</h3>
+                    <div class="h3 font-weight-bold text-primary mt--2"> <i class="fas fa-coins"></i>  {{ profile.balance|floatformat:2 }}</div>
+                  </div>
+          
+             <div class="text-center mt-2">
+                    <h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>
+                    <div class="h3 font-weight-bold text-primary mt--2"> <i class="fas fa-coins"></i>  {{ profile.purchase_balance|floatformat:2 }}</div>
+                  </div>
+      </ul>
+           <hr class="my-1">
+      <ul class="navbar-nav">
+        <li class="nav-item"> <a class="nav-link" href="{% url 'account_page' %}"> <i class="fa fa-tv text-primary"></i> Dashboard</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'insert_page' %}"> <i class="fa fa-plus-square text-success"></i> Add funds </a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'payment_page' %}"> <i class="fa fa-minus-square text-red"></i> Withdraw </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="{% url 'exchange_page' %}"> <i class="fas fa-exchange-alt text-info"></i> Exchanger </a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'plans_page' %}"> <i class="fa fa-shopping-bag text-warning"></i> Plans </a> </li>
+      </ul>
+      <hr class="my-1">
+      <ul class="navbar-nav">
+        <li class="nav-item"> <a class="nav-link" href="{% url 'viewads_page' %}"> <i class="fa fa-eye"></i> View Ads </a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'viewads_add_page' %}"> <i class="fa fa-forward"></i> Advertiser Panel </a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'referrals_page' %}"> <i class="fa fa-users"></i> My referrals </a> </li>
+      </ul>
+      <hr class="my-1">
+      <ul class="navbar-nav">
+        <li class="nav-item"> <a class="nav-link" href="{% url 'settings_page' %}"> <i class="fa fa-cog" aria-hidden="true"></i> Personal Settings </a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'exit_page' %}"> <i class="fas fa-running"></i> Logout </a> </li>
+      </ul>
+    </div>
+      
+    <div class="collapse navbar-collapse" id="sidenav-collapse-main"> 
+      <!-- collapse header -->
+      <s="navbar-collapse-header d-md-none">
+      </div>
+      <!-- form --> 
+      
+    </div>
+  </div>
+</nav>
+  <div class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <div class="col">
+          <h1 class="display-3 text-white">Balance exchange</h1>
+        </div>
+
+        <!-- Form -->
+
+        <!-- User -->
+      <ul class="navbar-nav align-items-center d-none d-md-flex">
+        <li class="nav-item dropdown"> <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="media align-items-center"> <span class="avatar avatar-sm rounded-circle"> <img alt="Image placeholder" src="{% static 'img/react.jpg' %}"> </span>
+            <div class="media-body ml-2 d-none d-lg-block"> <span class="mb-0 text-sm  font-weight-bold notranslate">{{ user.username|default:'Guest' }}</span> </div>
+          </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="{% url 'account_page' %}" class="dropdown-item"> <i class="fa fa-user"></i> <span>My profile</span> </a> <a href="{% url 'settings_page' %}" class="dropdown-item"> <i class="fa fa-cog" aria-hidden="true"></i> <span>Settings</span> </a> <a href="{% url 'stats_page' %}" class="dropdown-item"> <i class="fa fa-calendar-alt"></i> <span>Statistics</span> </a> <a href="{% url 'contacts_page' %}" class="dropdown-item"> <i class="fa fa-life-ring"></i> <span>Support</span> </a>
+            <div class="dropdown-divider"></div>
+            <a href="{% url 'exit_page' %}" class="dropdown-item"> <i class="fas fa-running"></i> <span>Logout</span> </a> </div>
+        </li>
+      </ul>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-9 pt-7 pt-md-8">
+      <div class="container-fluid d-flex align-items-center mt--3">
+        <div class="row col">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card bg-default">
+              <div class="card-body">
+                <div class="text-white">
+                  <p>Convert your coins to use them to purchase advertising or buy plans! + 10%.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	  
+
+
+<div class="col-lg-12 text-center mt-4"> 
+<iframe data-aa="1328909" src="//ad.a-ads.com/1328909?size=468x60" scrolling="no" style="width:468px; height:60px; border:0px; padding:0; overflow:hidden" allowtransparency="true" mlxwatca4=""></iframe>
+<iframe data-aa="1328909" src="//ad.a-ads.com/1328909?size=468x60" scrolling="no" style="width:468px; height:60px; border:0px; padding:0; overflow:hidden" allowtransparency="true" mlxwatca4=""></iframe>
+</div>
+
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--8">
+      <div class="row row justify-content-center">
+        <div class="col-xl-6 order-xl-1 mb-5 mb-xl-0">
+          <div class="card bg-secondary shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                  <div class="card-profile-image"> <img src="{% static 'img/exchange.png' %}"> </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-6 pt-md-4 pb-0 pb-md-4"> </div>
+            <div class="card-body pt-4 pt-md-4">
+              <form onsubmit="submitfromexchange(this);return false">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-header border-0">
+                      <h3 class="mb-0"> Exchange from Balance to Purchase balance</h3>
+                    </div>
+                    <hr class="my-4">
+                    <h3>Min exchange: 100 coins</h3>
+
+                    <hr class="my-4">
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative mb-4">
+                        <div class="input-group-prepend"> <span class="input-group-text"><i class="col fas fa-coins"></i></span> </div>
+                        <input class="form-control form-control-alternative" onkeyup="GetSumPer(this.value);" id="amount" type="number" step="any" min="100" autocomplete="off" maxlength="7" placeholder="Enter coin to exchange" required="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <h3 id="res_sum"></h3>
+                  <button class="btn btn-icon btn-3 btn-primary" type="submit"> <span class="btn-inner--icon"><i class="fa fa-exchange-alt"></i></span> <span class="btn-inner--text">Exchange</span> </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+        <!-- Footer -->
+    <footer class="footer mt-4">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted"> © 2020 <a href="https://argonclick.com/" class="font-weight-bold ml-1">ArgonClick</a> </div>
+          </div>
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+              <li class="nav-item"> <a href="https://argonclick.com/terms" class="nav-link">Terms</a> </li>
+              <li class="nav-item"> <a href="https://argonclick.com/about" class="nav-link">About Us</a> </li>
+              <li class="nav-item"> <a href="https://argonclick.com/contacts" class="nav-link">Contacts</a> </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+{% compress js %}
+<script src="{% static 'frontend/jquery.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<script src="{% static 'frontend/clipboard.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<script src="{% static 'frontend/argon-dashboard.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap-notify.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap-notify_002.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/apppost.js' %}" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    function GetSumPer(st_q) {
+      if (st_q) {
+        var sum_insert = parseFloat(st_q);
+        $('#res_sum').html("You will receive [+10%]: <span class='text-danger'> " + Math.round(sum_insert + (sum_insert * 0.1)) + "</span> Coins");
+        if (sum_insert < 100) {
+          $('button').attr("disabled", "disabled");
+          return false;
+        } else {
+          $('button').removeAttr("disabled");
+        }
+      } else {
+        $('#res_sum').html("");
+      }
+    }
+  </script>
+{% endcompress %}
+
+</body></html>

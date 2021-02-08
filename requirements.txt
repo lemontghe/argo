@@ -1,0 +1,17 @@
+django
+gunicorn
+django-heroku
+whitenoise
+
+Django==3.1.4
+django-appconf==1.0.4
+django-compressor==2.4
+django-crispy-forms==1.10.0
+django-dispatch==1.0.1
+django-filter==2.4.0
+django-fontawesome==1.0
+django-formtools==2.2
+django-frontend==1.8.0
+django-icons==2.2.1
+djangorestframework==3.12.2
+gunicorn==20.0.4
