@@ -136,7 +136,7 @@ TAGGIT_CASE_INSENSITIVE = True
 dotenv_file = path.join(BASE_DIR, ".env")
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-django_heroku.settings(locals())
-#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
+#  django_heroku.settings(locals())
+django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
