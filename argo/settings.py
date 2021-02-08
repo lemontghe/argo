@@ -4,8 +4,8 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
-#  SECRET_KEY = 'vt22afw=$gh4@(*ks13d&ow2suoh=nn3apvpfx5*ce_ru(50m#'
-SECRET_KEY = environ.get('SECRET_KEY')
+SECRET_KEY = 'vt22afw=$gh4@(*ks13d&ow2suoh=nn3apvpfx5*ce_ru(50m#'
+#  SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #  DEBUG = True
@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #  'whitenoise.runserver_nostatic',
     # 'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #  'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'argo.urls'
@@ -138,7 +138,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
