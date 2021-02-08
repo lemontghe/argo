@@ -71,23 +71,23 @@ WSGI_APPLICATION = 'argo.wsgi.application'
 
 # Database
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 #  DATABASES = {
     #  'default': {
-        #  'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #  'NAME': 'argo',
-        #  'USER': 'username',
-        #  'PASSWORD': 'password',
-        #  'HOST': 'localhost',
-        #  'PORT': '5432',
+        #  'ENGINE': 'django.db.backends.sqlite3',
+        #  'NAME': BASE_DIR / 'db.sqlite3',
     #  }
 #  }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3s5298qa0cop7',
+        'USER': 'jnuyfonzyaieps',
+        'PASSWORD': '078ac3c17b66e0fa6581c5019990dc61f31ff511ba499d73151db99d21a35722',
+        'HOST': 'ec2-52-205-3-3.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 #  DATABASES = {
     #  'default': {
