@@ -101,7 +101,6 @@ def referrals(request):
     return render(request, 'frontend/referrals.html', {"code": code, "profile": profile})
 
 
-@login_required(login_url='login_page')
 def stats(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
