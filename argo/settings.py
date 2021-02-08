@@ -71,27 +71,23 @@ WSGI_APPLICATION = 'argo.wsgi.application'
 
 # Database
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-
-
 #  DATABASES = {
     #  'default': {
-        #  'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #  'NAME': 'argo',
-        #  'USER': 'le',
-        #  'PASSWORD': 'ytefastonsi',
-        #  'HOST': 'localhost',
-        #  'PORT': '5432',
+        #  'ENGINE': 'django.db.backends.sqlite3',
+        #  'NAME': BASE_DIR / 'db.sqlite3',
     #  }
 #  }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'argo',
+        'USER': 'le',
+        'PASSWORD': 'ytefastonsi',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 #  DATABASES = {
     #  'default': {
@@ -104,6 +100,9 @@ DATABASES['default'].update(db_from_env)
     #  }
 #  }
 
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
