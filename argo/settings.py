@@ -19,8 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontend.apps.FrontendConfig',
-    #  'api.apps.ApiConfig',
-    #  'rest_framework',
     'compressor',
     'crispy_forms',
     'django.contrib.sites',
@@ -82,11 +80,11 @@ WSGI_APPLICATION = 'argo.wsgi.application'
     #  }
 #  }
 
-#  db_from_env = dj_database_url.config(conn_max_age=600)
-#  DATABASES['default'].update(db_from_env)
-
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -111,15 +109,17 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
+#  STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = "staticfiles"
 STATICFILES_DIRS = (
     path.join(BASE_DIR, 'static'),
 )
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 CRISPY_TEMPLATE_PACK="bootstrap4"
 LOGIN_REDIRECT_URL = '/account/'
