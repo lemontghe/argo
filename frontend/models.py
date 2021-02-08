@@ -67,7 +67,6 @@ class AdsPlan(models.Model):
 
 
 class PlansPlan(models.Model):
-    name = id
     price = models.IntegerField(default=0)
     price_in_dollor  = models.FloatField(default=0)
     per_hour = models.FloatField(default=0)
@@ -76,7 +75,7 @@ class PlansPlan(models.Model):
     life_time = models.CharField(max_length=10)
 
     def __str__(self):
-        return f"Plan {self.name}"
+        return f"Plan {self.id}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
