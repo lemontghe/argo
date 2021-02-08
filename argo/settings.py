@@ -1,6 +1,8 @@
 from pathlib import Path
 from os import path, environ
 import dj_database_url
+import dotenv
+import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -44,7 +46,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #  'whitenoise.runserver_nostatic',
-    # 'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -78,16 +80,17 @@ WSGI_APPLICATION = 'argo.wsgi.application'
     #  }
 #  }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd3s5298qa0cop7',
-        'USER': 'jnuyfonzyaieps',
-        'PASSWORD': '078ac3c17b66e0fa6581c5019990dc61f31ff511ba499d73151db99d21a35722',
-        'HOST': 'ec2-52-205-3-3.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
+#  DATABASES = {
+    #  'default': {
+        #  'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #  'NAME': 'd3s5298qa0cop7',
+        #  'USER': 'jnuyfonzyaieps',
+        #  'PASSWORD': '078ac3c17b66e0fa6581c5019990dc61f31ff511ba499d73151db99d21a35722',
+        #  'HOST': 'ec2-52-205-3-3.compute-1.amazonaws.com',
+        #  'PORT': '5432',
+    #  }
+#  }
+
 
 #  DATABASES = {
     #  'default': {
@@ -95,14 +98,17 @@ DATABASES = {
         #  'NAME': 'argo',
         #  'USER': 'user',
         #  'PASSWORD': 'pass',
-        #  'HOST':'sql202.asdfa.com',
+        #  'HOST':'sql202.dwwdd.com',
         #  'PORT': '3306',
     #  }
 #  }
 
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+#  db_from_env = dj_database_url.config(conn_max_age=600)
+#  DATABASES['default'].update(db_from_env)
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -138,8 +144,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 
@@ -155,3 +161,11 @@ TAGGIT_CASE_INSENSITIVE = True
 #  EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD'
 #  EMAIL_PORT = 587
 #  EMAIL_USE_TLS = True
+
+dotenv_file = path.join(BASE_DIR, ".env")
+if path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
+django_heroku.settings(locals())
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)

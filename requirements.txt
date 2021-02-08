@@ -3,6 +3,7 @@ gunicorn
 django-heroku
 whitenoise
 dj-database-url
+python-dotenv
 
 django-appconf==1.0.4
 django-compressor==2.4
