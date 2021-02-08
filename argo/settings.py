@@ -10,8 +10,7 @@ SECRET_KEY = "SECRET_KEY"
 
 #  DEBUG = True
 DEBUG = False
-ALLOWED_HOSTS = ['*']
-#  ALLOWED_HOSTS = ["argooo.herokuapp.com", "127.0.0.1", "0.0.0.0"]
+ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
