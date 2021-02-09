@@ -435,7 +435,7 @@ def account(request, *args, **kwargs):
     count = 0
     for i in range(profile_count):
         p = Profile.objects.get(code=i+10000)
-        print(p.ads)
+        #  print(p.ads)
         if p.ads in [None, '']: continue
         ads.append(save_asList(p, profile.ads))
     #  for ad in ads:
