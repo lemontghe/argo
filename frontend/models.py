@@ -72,7 +72,7 @@ class PlansPlan(models.Model):
     per_hour = models.FloatField(default=0)
     per_day = models.FloatField(default=0)
     per_month = models.FloatField(default=0)
-    life_time = models.CharField(max_length=10)
+    life_time = models.CharField(max_length=10, null=True, blank=True)
 
     def __str__(self):
         return f"Plan {self.id}"

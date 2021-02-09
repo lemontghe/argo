@@ -276,6 +276,7 @@ def viewads_add(request, *args, **kwargs):
 
             if editsite_form.is_valid():
                 no_ad = int(list(request.POST)[-1])-1
+                if no_ad == "no_plan": no_ad = 0
                 if request.is_ajax():
                     profile.url = editsite_form.cleaned_data.get('url')
                     profile.title = editsite_form.cleaned_data.get('title')
@@ -435,7 +436,6 @@ def account(request, *args, **kwargs):
     count = 0
     for i in range(profile_count):
         p = Profile.objects.get(code=i+10000)
-        #  print(p.ads)
         if p.ads in [None, '']: continue
         ads.append(save_asList(p, profile.ads))
     #  for ad in ads:
