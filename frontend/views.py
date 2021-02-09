@@ -192,26 +192,13 @@ def viewads_add(request, *args, **kwargs):
     #  Ad.id = 0
     #  profile.save()
 
-    if '1' in request.POST:
-        no_plan = "Micro"
-    elif '2' in request.POST:
-        no_plan = "Macro"
-    elif '3' in request.POST:
-        no_plan = "Extended"
-    elif '4' in request.POST:
-        no_plan = "Economy"
-    elif '5' in request.POST:
-        no_plan = "Normal"
-    elif '6' in request.POST:
-        no_plan = "Premium"
-    else:
-        numbers = ("Micro",
-            "Macro",
-            "Extended",
-            "Economy",
-            "Normal",
-            "Premium")
-        no_plan = numbers[profile.no_plan-1]
+    ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
+    for i in range(plans_count):
+        if f'{i+1}' in request.POST:
+            no_plan = AdsPlan.objects.get(id=i+1).name
+        else:
+            numbers = tuple(ch)
+            no_plan = numbers[profile.no_plan-1]
 
     if request.method == 'POST':
         addsurf_form = AddSurfForm(request.POST, instance=request.user.profile)
@@ -281,12 +268,7 @@ def viewads_add(request, *args, **kwargs):
                     profile.url = editsite_form.cleaned_data.get('url')
                     profile.title = editsite_form.cleaned_data.get('title')
                     profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
-                    numbers = ("Micro",
-                        "Macro",
-                        "Extended",
-                        "Economy",
-                        "Normal",
-                        "Premium")
+                    ch = tuple([ad.name[4:] for ad in AdsPlan.objects.all()])
                     no_plan = numbers[profile.no_plan-1]
                     b[no_ad][0] = no_plan
                     b[no_ad][1] = profile.url

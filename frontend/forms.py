@@ -47,9 +47,7 @@ class AddSurfForm(forms.ModelForm):
 class EditSiteForm(forms.ModelForm):
     title = forms.CharField(max_length=70, min_length=7, widget=forms.TextInput(attrs={'placeholder': 'For example: Great site, watch everyone!', "class": "form-control", "type": "text"}))
     url = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'For example: https://google.com', "class": "form-control", "type": "url"}))
-    ch = []
-    for i in range(AdsPlan.objects.count()):
-        ch.append((i, AdsPlan.objects.get(id=i+1).name))
+    ch = [(ad.id, ad.name) for ad in AdsPlan.objects.all()]
     no_plan = forms.ChoiceField(required=False, choices=tuple(ch), widget=forms.Select(attrs={'class':'form-control'}))
     class Meta:
         model = Profile
