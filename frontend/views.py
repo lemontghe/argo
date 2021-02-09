@@ -430,6 +430,17 @@ def account(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     direct_referrals = profile.recs_number()
     if profile.investment_plans == None: profile.investment_plans = ''
+    profile_count = Profile.objects.count()
+    ads = []
+    count = 0
+    for i in range(profile_count):
+        p = Profile.objects.get(code=i+10000)
+        print(p.ads)
+        if p.ads in [None, '']: continue
+        ads.append(save_asList(p, profile.ads))
+    #  for ad in ads:
+        #  count += len(ad)
+        #  print(ad)
     return render(request, 'frontend/account.html', {"profile": profile, "direct_referrals": direct_referrals, "investment_plans": len(profile.investment_plans)})
 
 
