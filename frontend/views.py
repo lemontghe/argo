@@ -159,13 +159,12 @@ def save_asList(profile, obj):
 def viewads(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    profile_count = Profile.objects.count()
     ads = []
     plans = []
-    for i in range(profile_count):
+    for i in range(Profile.objects.count()):
         p = Profile.objects.get(code=i+10000)
         if p.ads in [None, '']: continue
-        ads.append(save_asList(p, profile.ads))
+        ads.append(save_asList(p, p.ads))
         #  for ad in ads[i]:
             #  if int(ad[0]) == 1:
                 #  ad.insert(0, 1)
@@ -178,10 +177,8 @@ def viewads_add(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
     plans_count = AdsPlan.objects.count()
-    plans = []
+    plans = [ad for ad in AdsPlan.objects.all()]
     details = []
-    for i in range(plans_count):
-        plans.append(AdsPlan.objects.get(id=i+1))
     if profile.no_plan in ['no_plan', None]: profile.no_plan = 0
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
@@ -256,6 +253,7 @@ def viewads_add(request, *args, **kwargs):
                     profile.purchase_balance += int(b[no_ad][3])
                     Ad.objects.filter(id=b[no_ad][4]).delete()
                     b.pop(no_ad)
+                    profile.no_plan = 0
                     save_ads(profile, b)
                     return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
                 else:
