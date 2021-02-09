@@ -420,10 +420,9 @@ def account(request, *args, **kwargs):
         p = Profile.objects.get(code=i+10000)
         if p.ads in [None, '']: continue
         ads.append(save_asList(p, profile.ads))
-    #  for ad in ads:
-        #  count += len(ad)
-        #  print(ad)
-    return render(request, 'frontend/account.html', {"profile": profile, "direct_referrals": direct_referrals, "investment_plans": len(profile.investment_plans)})
+    for ad in ads:
+        count += len(ad)
+    return render(request, 'frontend/account.html', {"profile": profile, "direct_referrals": direct_referrals, "investment_plans": len(profile.investment_plans), "count": count})
 
 
 def error_404(request, *args, **argv):
