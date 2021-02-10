@@ -160,6 +160,7 @@ def viewads(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
     profile_count = Profile.objects.count()
+    #  plans = []
     ads = []
     for i in range(profile_count):
         p = Profile.objects.get(code=i+10000)
