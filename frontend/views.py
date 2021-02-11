@@ -180,9 +180,6 @@ def viewads_add(request, *args, **kwargs):
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
     #  profile.purchase_balance = 600
-    #  profile.ads = ""
-    #  Ad.objects.all().delete()
-    #  Ad.id = 0
     #  profile.save()
 
     ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
@@ -305,7 +302,6 @@ def plans(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     if profile.plans in ['plans', None]: profile.ads = ''
     if profile.investment_plans in ['plans', None]: profile.investment_plans = ''
-    #  if '0' in profile.investment_plans and len(profile.investment_plans) > 1: profile.investment_plans = profile.investment_plans.replace('0', '')
 
     a = pytz.utc.localize(datetime.utcnow())
     b = a-profile.plan_created
@@ -322,7 +318,7 @@ def plans(request, *args, **kwargs):
         profile.per_hour += plan.per_hour*int(b[plan.id-1])
         if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.count():
             profile.investment_plans += f"0"
-        if f"{plan.id}" in request.POST:
+        if f"{plan.id}" in request.POST and request.is_ajax:
             if profile.purchase_balance >= plan.price:
                 profile.purchase_balance -= plan.price
                 b[plan.id-1] = str(int(b[plan.id-1])+1)
@@ -331,6 +327,11 @@ def plans(request, *args, **kwargs):
                     a += str(i)
                     a += ""
                 profile.investment_plans = a
+                profile.save()
+                plan.save()
+                return HttpResponse(json.dumps({"success": True}), content_type="application/json")
+            else:
+                return HttpResponse(json.dumps({"success": False}), content_type="application/json")
         plan.save()
 
     for i in range(l):
@@ -344,10 +345,14 @@ def plans(request, *args, **kwargs):
             prof[i] = hour*plan.per_hour*int(b[i])
 
     if "collect" in request.POST:
-        profile.balance += profile.profit/2
-        profile.purchase_balance += profile.profit/2
-        profile.profit = 0
-        profile.plan_created = pytz.utc.localize(datetime.utcnow())
+        if request.is_ajax:
+            profile.balance += profile.profit/2
+            profile.purchase_balance += profile.profit/2
+            profile.profit = 0
+            profile.plan_created = pytz.utc.localize(datetime.utcnow())
+            return HttpResponse(json.dumps({"success": True}), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({"success": False}), content_type="application/json")
     if profile.profit > profile.per_hour*24:
         profile.profit = profile.per_hour*24
         max_profit = 100
@@ -355,12 +360,12 @@ def plans(request, *args, **kwargs):
         max_profit = 0
     else:
         max_profit = int((profile.profit/(profile.per_hour*24)*100))
-        #  max_profit = int(sum(max_prof))
 
     profile.save()
 
     return render(request, 'frontend/plans.html', {"profile": profile,
                                                    "plans": zip(PlansPlan.objects.all(), prof, max_prof, save_asList(profile, profile.investment_plans)),
+                                                   "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
                                                    "profit": profile.profit,
                                                    "max_profit": max_profit,
                                                    })
