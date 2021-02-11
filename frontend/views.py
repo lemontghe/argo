@@ -344,15 +344,6 @@ def plans(request, *args, **kwargs):
             profile.profit = hour*profile.per_hour
             prof[i] = hour*plan.per_hour*int(b[i])
 
-    if "collect" in request.POST:
-        if request.is_ajax:
-            profile.balance += profile.profit/2
-            profile.purchase_balance += profile.profit/2
-            profile.profit = 0
-            profile.plan_created = pytz.utc.localize(datetime.utcnow())
-            return HttpResponse(json.dumps({"success": True}), content_type="application/json")
-        else:
-            return HttpResponse(json.dumps({"success": False}), content_type="application/json")
     if profile.profit > profile.per_hour*24:
         profile.profit = profile.per_hour*24
         max_profit = 100
@@ -360,6 +351,17 @@ def plans(request, *args, **kwargs):
         max_profit = 0
     else:
         max_profit = int((profile.profit/(profile.per_hour*24)*100))
+
+    if "collect" in request.POST:
+        if request.is_ajax:
+            profile.balance += profile.profit/2
+            profile.purchase_balance += profile.profit/2
+            profile.profit = 0
+            profile.plan_created = pytz.utc.localize(datetime.utcnow())
+            profile.save()
+            return HttpResponse(json.dumps({"success": True, "profit": profile.profit}), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
     profile.save()
 

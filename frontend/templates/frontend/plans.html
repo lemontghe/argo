@@ -179,16 +179,22 @@ your plan, the greater your income. Proceeds will be distributed between
                       <div class="h4 font-weight-300">Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour</div>
                       <form action="{% url 'plans_page' %}" id="collectForm" method="post">
                         {% csrf_token %}
-                        <button class="btn btn-default" name="collect" id="collect-btn" type="submit">
+                        <button class="btn btn-default" id="collect-btn" type="submit">
                           <span class="btn-inner--icon"><i class="fa fa-coins"></i></span>
                           <span class="btn-inner--text">Collect money</span>
                         </button>
                       </form>
                   <script type="text/javascript">
+                        var m = 0;
+                        var collect = false;
+                        window.setInterval(function(){
+                            m += 1;
+                            alert(m);
+                        }, 1000);
                       $(document).on("submit", "#collectForm", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
-                            form.push({name: "{{plan.id}}"});
+                            form.push({name: "collect"});
                             $.ajax({
                                 url: '{% url "plans_page" %}',
                                 type: "POST",
@@ -197,17 +203,8 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
-                                    alert(success);
-                                    if(success){
-                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">|  You have successfully collected</span>', {
-                                          type: 'success',
-                                          allow_dismiss: true,
-                                          animate: {
-                                            enter: 'animated fadeInRight',
-                                            exit: 'animated fadeOutRight'
-                                          }
-                                        });
-                                    }else if ({{pcs}} == 0){
+                                    if ({{pcs}} == 0){
+                                        e.preventDefault();
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Before collecting money please buy a plan</span>', {
                                           type: 'danger',
                                           allow_dismiss: true,
@@ -216,17 +213,36 @@ your plan, the greater your income. Proceeds will be distributed between
                                             exit: 'animated fadeOutRight'
                                           }
                                         });
-                                    }else if (collect){
-                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Collect no more than 1 time in 10 minutes.</span>', {
-                                          type: 'danger',
-                                          allow_dismiss: true,
-                                          animate: {
-                                            enter: 'animated fadeInRight',
-                                            exit: 'animated fadeOutRight'
-                                          }
-                                        });
+                                    }else if(success){
+                                        if (m>=60){
+                                            collect = false;
+                                            m = 0;
+                                        }
+                                        if(collect){
+                                            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Collect no more than 1 time in 10 minutes.</span>', {
+                                              type: 'danger',
+                                              allow_dismiss: true,
+                                              animate: {
+                                                enter: 'animated fadeInRight',
+                                                exit: 'animated fadeOutRight'
+                                              }
+                                            });
+                                        }else{
+                                            collect = true;
+                                            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You have successfully collected</span>', {
+                                              type: 'success',
+                                              allow_dismiss: true,
+                                              animate: {
+                                                enter: 'animated fadeInRight',
+                                                exit: 'animated fadeOutRight'
+                                              }
+                                            });
+                                        }
                                     }
-                                    $(".text-center").load(location.href + " .text-center");
+                                    document.getElementById("Sbor").innerHTML = ' '+response.profit;
+                                    if(response.profit==0){
+                                        document.getElementById("Sbor").innerHTML += ".000";
+                                    }
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
@@ -425,8 +441,9 @@ your plan, the greater your income. Proceeds will be distributed between
 <script src="{% static 'frontend/apppost.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endcompress %}
 
-<script type="text/javascript" language="javascript">
 
+
+<script type="text/javascript" language="javascript">
 timerId = setInterval(function(){
     $.ajax({
         url: '{% url "plans_page" %}',
@@ -436,40 +453,8 @@ timerId = setInterval(function(){
             clearInterval(0);
         }
     });
-}, 30000)
+}, 300000)
 
-var collect = false;
-$(function(){
-    collect = false;
-    setInterval(function () {
-        collect = true
-        alert(1);
-    }, 600000);
-
-    $("#collect-btn").on("click",function(e){
-        if ({{pcs}} == 0){
-            e.preventDefault();
-            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Before collecting money please buy a plan</span>', {
-              type: 'danger',
-              allow_dismiss: true,
-              animate: {
-                enter: 'animated fadeInRight',
-                exit: 'animated fadeOutRight'
-              }
-            });
-        }else if (collect){
-            e.preventDefault();
-            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Collect no more than 1 time in 10 minutes.</span>', {
-              type: 'danger',
-              allow_dismiss: true,
-              animate: {
-                enter: 'animated fadeInRight',
-                exit: 'animated fadeOutRight'
-              }
-            });
-        }
-    });
-});
 </script>
 
 </body></html>
