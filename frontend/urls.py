@@ -26,7 +26,6 @@ urlpatterns = [
     path('exchange/', views.exchange, name="exchange_page"),
     path('plans/', views.plans, name="plans_page"),
     path('exit/',  LogoutView.as_view(), name="exit_page"),
-    #  path('settings/', views.PasswordChangingView.as_view(template_name='frontend/settings.html'), name="settings_page"),
     path('settings/', views.settings, name="settings_page"),
 
     path('favicon.ico',
@@ -35,5 +34,6 @@ urlpatterns = [
         ),
         name="favicon"
     ),
+    path("robots.txt", views.robots_txt),
 
 ]

@@ -14,6 +14,7 @@ from .forms import RegisterForm, LoginForm, PasswordChangingForm, PasswordReseti
 from .models import Profile, Ad, AdsPlan, PlansPlan
 from django.db import transaction
 from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
 
 class PasswordResetingView(PasswordResetView):
@@ -428,3 +429,11 @@ def account(request, *args, **kwargs):
 
 def error_404(request, *args, **argv):
     return render(request, 'frontend/404.html', {}, status=404)
+
+@require_GET
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /admin/",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
