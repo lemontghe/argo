@@ -77,5 +77,5 @@ class PlansPlan(models.Model):
     def __str__(self):
         return f"Plan {self.id}"
 
-    #  def save(self, *args, **kwargs):
-        #  super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
