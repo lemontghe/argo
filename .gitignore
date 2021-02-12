@@ -1,3 +1,6 @@
 .svn
 __pycache__/*.pyc
 *.pyc
+migrations/*
+migrations
+frontend/migrations
