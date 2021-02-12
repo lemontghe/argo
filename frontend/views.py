@@ -367,7 +367,7 @@ def plans(request, *args, **kwargs):
     profile.save()
 
     return render(request, 'frontend/plans.html', {"profile": profile,
-                                                   "plans": zip(PlansPlan.objects.all(), prof, max_prof, save_asList(profile, profile.investment_plans)),
+                                                   "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
                                                    "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
                                                    "profit": profile.profit,
                                                    "max_profit": max_profit,
