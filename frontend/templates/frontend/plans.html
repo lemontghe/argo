@@ -291,10 +291,10 @@ your plan, the greater your income. Proceeds will be distributed between
                 <div class="card-header bg-white border-0">
                   <div class="row align-items-center">
                     <div class="col-8">
-                        <h3 class="mb-0 text-warning"><span class="fa fa-shopping-bag"></span> Plan {{plan.id}}</h3>
+                        <h3 class="mb-0 text-warning"><span class="fa fa-shopping-bag"></span> Plan {{0}}</h3>
 
                     </div>
-                    <div class="col-4 text-right">${{plan.price_in_dollor}}</div>
+                    <div class="col-4 text-right">${{0}}</div>
                   </div>
                 </div>
                 <div class="card-body">
@@ -303,19 +303,19 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="col-lg-12">
                       <div>
                         <label class="form-control-label">Price:</label>
-                        <span class="float-right">{{plan.price}} coins</span>
+                        <span class="float-right">{{0}} coins</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per hour:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_hour}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per day:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_day}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per month:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_month}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
                       </div>
 					  <div>
                         <label class="form-control-label">Life time:</label>
@@ -336,7 +336,7 @@ your plan, the greater your income. Proceeds will be distributed between
                       $(document).on("submit", "#buyplanForm{{forloop.counter}}", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
-                            form.push({name: "{{plan.id}}"});
+                            form.push({name: "{{0}}"});
                             $.ajax({
                                 url: '{% url "plans_page" %}',
                                 type: "POST",
@@ -345,8 +345,8 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
-                                    if ({{profile.purchase_balance}} >= {{plan.price}}){
-                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{plan.id}}</span>', {
+                                    if ({{profile.purchase_balance}} >= {{0}}){
+                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{0}}</span>', {
                                           type: 'success',
                                           allow_dismiss: true,
                                           animate: {
@@ -391,13 +391,13 @@ your plan, the greater your income. Proceeds will be distributed between
                       </div>
                       <div>
                         <label class="form-control-label">My Plan:</label>
-                        <span class="float-right notranslate" id="Sbor{{plan.id}}">{{ p|floatformat:2 }}/{{ mp|floatformat:2 }}</span>
+                        <span class="float-right notranslate" id="Sbor{{0}}</span>
                       </div>
                     </div>
                   </div>
 
-                  <input type="hidden" id="PlanPurchased{{plan.id}}" value="1">
-                  <input type="hidden" id="PlanPerc{{plan.id}}" value="0.1">
+                  <input type="hidden" id="PlanPurchased{{0}}" value="1">
+                  <input type="hidden" id="PlanPerc{{0}}" value="0.1">
 
 
                 </div>
