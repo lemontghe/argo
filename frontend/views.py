@@ -329,11 +329,11 @@ def plans(request, *args, **kwargs):
                     a += ""
                 profile.investment_plans = a
                 profile.save()
-                plan.save()
+                #  plan.save()
                 return HttpResponse(json.dumps({"success": True}), content_type="application/json")
             else:
                 return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-        plan.save()
+        #  plan.save()
 
     for i in range(l):
         plan = PlansPlan.objects.get(id=i+1)
