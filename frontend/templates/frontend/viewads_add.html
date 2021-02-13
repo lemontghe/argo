@@ -391,7 +391,7 @@
                                                             if (success){
                                                                 var value = document.forms["coin_form{{forloop.counter}}"]["coin"].value;
                                                                 document.getElementById("coin_span{{forloop.counter}}").innerHTML = " "+response.sb;
-                                                                document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);;
+                                                                document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                                                 var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">| Balance add successful</span>', {
                                                                   type: 'success',
                                                                   allow_dismiss: true,

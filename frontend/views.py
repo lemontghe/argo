@@ -180,8 +180,8 @@ def viewads_add(request, *args, **kwargs):
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
-    #  profile.purchase_balance = 600
-    #  profile.save()
+    profile.purchase_balance = 1200000
+    profile.save()
 
     ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
     for i in range(plans_count):
@@ -331,7 +331,7 @@ def plans(request, *args, **kwargs):
                     profile.investment_plans = a
                     profile.save()
                     plan.save()
-                    return HttpResponse(json.dumps({"success": True}), content_type="application/json")
+                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
@@ -360,7 +360,7 @@ def plans(request, *args, **kwargs):
             profile.profit = 0
             profile.plan_created = pytz.utc.localize(datetime.utcnow())
             profile.save()
-            return HttpResponse(json.dumps({"success": True, "profit": profile.profit}), content_type="application/json")
+            return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0}), content_type="application/json")
         else:
             return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 

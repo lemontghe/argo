@@ -75,7 +75,7 @@
           
              <div class="text-center mt-2">
                     <h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>
-                    <div class="h3 font-weight-bold text-primary mt--2"> <i class="fas fa-coins"></i>  {{ profile.purchase_balance|floatformat:2  }}</div>
+                    <div class="h3 font-weight-bold text-primary mt--2" id="pb"> <i class="fas fa-coins"></i>  {{ profile.purchase_balance|floatformat:2  }}</div>
                   </div>
       </ul>
            <hr class="my-1">
@@ -242,6 +242,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                     if(response.profit==0){
                                         document.getElementById("Sbor").innerHTML += ".000";
                                     }
+                                    $('.progress').load('.progress-bar');
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
@@ -291,10 +292,10 @@ your plan, the greater your income. Proceeds will be distributed between
                 <div class="card-header bg-white border-0">
                   <div class="row align-items-center">
                     <div class="col-8">
-                        <h3 class="mb-0 text-warning"><span class="fa fa-shopping-bag"></span> Plan {{0}}</h3>
+                        <h3 class="mb-0 text-warning"><span class="fa fa-shopping-bag"></span> Plan {{plan.id}}</h3>
 
                     </div>
-                    <div class="col-4 text-right">${{0}}</div>
+                    <div class="col-4 text-right">${{plan.price_in_dollor}}</div>
                   </div>
                 </div>
                 <div class="card-body">
@@ -303,19 +304,19 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="col-lg-12">
                       <div>
                         <label class="form-control-label">Price:</label>
-                        <span class="float-right">{{0}} coins</span>
+                        <span class="float-right">{{plan.price}} coins</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per hour:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_hour}}</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per day:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_day}}</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per month:</label>
-                        <span class="float-right"><span class="fas fa-coins"></span> {{0}}</span>
+                        <span class="float-right"><span class="fas fa-coins"></span> {{plan.per_month}}</span>
                       </div>
 					  <div>
                         <label class="form-control-label">Life time:</label>
@@ -336,7 +337,7 @@ your plan, the greater your income. Proceeds will be distributed between
                       $(document).on("submit", "#buyplanForm{{forloop.counter}}", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
-                            form.push({name: "{{0}}"});
+                            form.push({name: "{{plan.id}}"});
                             $.ajax({
                                 url: '{% url "plans_page" %}',
                                 type: "POST",
@@ -345,8 +346,8 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
-                                    if ({{profile.purchase_balance}} >= {{0}}){
-                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{0}}</span>', {
+                                    if ({{profile.purchase_balance}} >= {{plan.price}}){
+                                        var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{plan.id}}</span>', {
                                           type: 'success',
                                           allow_dismiss: true,
                                           animate: {
@@ -365,6 +366,8 @@ your plan, the greater your income. Proceeds will be distributed between
                                         });
                                     }
                                     $("#show_table").load(location.href + " #show_table");
+                                    document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
+
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
@@ -391,14 +394,10 @@ your plan, the greater your income. Proceeds will be distributed between
                       </div>
                       <div>
                         <label class="form-control-label">My Plan:</label>
-                        <span class="float-right notranslate" id="Sbor{{0}}</span>
+                        <span class="float-right notranslate" id="Sbor{{plan.id}}">{{ p|floatformat:2 }}/{{ mp|floatformat:2 }}</span>
                       </div>
                     </div>
                   </div>
-
-                  <input type="hidden" id="PlanPurchased{{0}}" value="1">
-                  <input type="hidden" id="PlanPerc{{0}}" value="0.1">
-
 
                 </div>
               </div>
