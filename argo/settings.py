@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'django.contrib.sites',
-    'whitenoise.runserver_nostatic',
+    #  'whitenoise.runserver_nostatic',
 ]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #  'whitenoise.runserver_nostatic',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #  'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 ROOT_URLCONF = 'argo.urls'
 SITE_ID=1,
@@ -62,12 +62,12 @@ WSGI_APPLICATION = 'argo.wsgi.application'
 
 # Database
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#  DATABASES = {
+    #  'default': {
+        #  'ENGINE': 'django.db.backends.sqlite3',
+        #  'NAME': BASE_DIR / 'db.sqlite3',
+    #  }
+#  }
 
 #  DATABASES = {
     #  'default': {
@@ -80,11 +80,11 @@ DATABASES = {
     #  }
 #  }
 
-#  DATABASES = {}
-#  DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-#
-#  db_from_env = dj_database_url.config(conn_max_age=600)
-#  DATABASES['default'].update(db_from_env)
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -116,7 +116,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 #  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 

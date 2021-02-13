@@ -1,4 +1,3 @@
-from os import getcwd
 from time import sleep
 
 

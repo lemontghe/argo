@@ -53,17 +53,17 @@ class Ad(models.Model):
         super().save(*args, **kwargs)
 
 
-#  class AdsPlan(models.Model):
-    #  name = models.CharField(max_length=15, blank=False, null=True, unique=True)
-    #  time = models.CharField(max_length=10, blank=False, null=True)
-    #  price_per_1 = models.IntegerField(default=0)
-    #  price_per_1000 = models.IntegerField(default=0)
-#
-    #  def __str__(self):
-        #  return f"{self.name}"
-#
-    #  def save(self, *args, **kwargs):
-        #  super().save(*args, **kwargs)
+class AdsPlan(models.Model):
+    name = models.CharField(max_length=15, blank=False, null=True, unique=True)
+    time = models.CharField(max_length=10, blank=False, null=True)
+    price_per_1 = models.IntegerField(default=0)
+    price_per_1000 = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
 
 class PlansPlan(models.Model):
