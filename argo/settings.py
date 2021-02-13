@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "SECRET_KEY"
 #  SECRET_KEY = environ.get('SECRET_KEY')
 
-DEBUG = True
-#  DEBUG = False
+#  DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
 INSTALLED_APPS = [
     'django.contrib.admin',
