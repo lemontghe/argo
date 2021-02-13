@@ -3,3 +3,7 @@ __pycache__/*.pyc
 *.pyc
 frontend/__pycache__/*
 argo/__pycache__/*
+migrations/*
+migrations
+frontend/migrations
+db.sqlite3
