@@ -11,7 +11,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from .forms import RegisterForm, LoginForm, PasswordChangingForm, PasswordResetingForm, PaymentForm, AddSurfForm, EditSiteForm, SiteBalanceForm
-from .models import Profile, Ad, AdsPlan, PlansPlan
+from .models import Profile, Ad, PlansPlan
 from django.db import transaction
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
@@ -173,8 +173,10 @@ def viewads(request, *args, **kwargs):
 def viewads_add(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    plans_count = AdsPlan.objects.count()
-    plans = [ad for ad in AdsPlan.objects.all()]
+    #  plans_count = AdsPlan.objects.count()
+    plans_count = 0
+    #  plans = [ad for ad in AdsPlan.objects.all()]
+    plans = [[]]
     details = []
     if profile.no_plan in ['no_plan', None]: profile.no_plan = 0
     if profile.ads in ['ads', None]: profile.ads = ''
@@ -183,13 +185,14 @@ def viewads_add(request, *args, **kwargs):
     profile.purchase_balance = 1200000
     profile.save()
 
-    ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
-    for i in range(plans_count):
-        if f'{i+1}' in request.POST:
-            no_plan = AdsPlan.objects.get(id=i+1).name
-        else:
-            numbers = tuple(ch)
-            no_plan = numbers[profile.no_plan-1]
+    #  ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
+    ch = []
+    #  for i in range(plans_count):
+        #  if f'{i+1}' in request.POST:
+            #  no_plan = AdsPlan.objects.get(id=i+1).name
+        #  else:
+            #  numbers = tuple(ch)
+            #  no_plan = numbers[profile.no_plan-1]
 
     if request.method == 'POST':
         addsurf_form = AddSurfForm(request.POST, instance=request.user.profile)
@@ -260,7 +263,8 @@ def viewads_add(request, *args, **kwargs):
                     profile.url = editsite_form.cleaned_data.get('url')
                     profile.title = editsite_form.cleaned_data.get('title')
                     profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
-                    ch = tuple([ad.name[4:] for ad in AdsPlan.objects.all()])
+                    #  ch = tuple([ad.name[4:] for ad in AdsPlan.objects.all()])
+                    ch = []
                     no_plan = numbers[profile.no_plan-1]
                     b[no_ad][0] = no_plan
                     b[no_ad][1] = profile.url
