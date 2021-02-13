@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'django.contrib.sites',
-    'whitenoise.runserver_nostatic',
+    #  'whitenoise.runserver_nostatic',
 ]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #  'whitenoise.runserver_nostatic',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #  'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 ROOT_URLCONF = 'argo.urls'
 SITE_ID=1,
@@ -116,7 +116,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 #  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
