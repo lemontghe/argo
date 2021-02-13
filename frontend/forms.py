@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, AdsPlan
 from django.core.exceptions import ValidationError
 
 
@@ -47,9 +47,8 @@ class AddSurfForm(forms.ModelForm):
 class EditSiteForm(forms.ModelForm):
     title = forms.CharField(max_length=70, min_length=7, widget=forms.TextInput(attrs={'placeholder': 'For example: Great site, watch everyone!', "class": "form-control", "type": "text"}))
     url = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'For example: https://google.com', "class": "form-control", "type": "url"}))
-    #  ads = AdsPlan.objects.all() if AdsPlan.objects.count() else []
-    #  ch = [(ad.id, ad.name) for ad in ads]
-    ch = ((1, "a"), (2, "b"))
+    ads = AdsPlan.objects.all() if AdsPlan.objects.count() else []
+    ch = [(ad.id, ad.name) for ad in ads]
     no_plan = forms.ChoiceField(required=False, choices=tuple(ch), widget=forms.Select(attrs={'class':'form-control'}))
     class Meta:
         model = Profile
