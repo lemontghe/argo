@@ -10,7 +10,8 @@ SECRET_KEY = "SECRET_KEY"
 
 DEBUG = True
 #  DEBUG = False
-ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',"argooo.herokuapp.com"]
+#  ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,7 +23,7 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'django.contrib.sites',
-    #  'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',
 ]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -37,9 +38,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #  'whitenoise.runserver_nostatic',
     'django.middleware.security.SecurityMiddleware',
-    #  'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 ROOT_URLCONF = 'argo.urls'
 SITE_ID=1,
@@ -116,7 +116,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 #  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 #  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
@@ -136,8 +136,6 @@ TAGGIT_CASE_INSENSITIVE = True
 dotenv_file = path.join(BASE_DIR, ".env")
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-django_heroku.settings(locals())
-#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
 
@@ -151,3 +149,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_SECURE = True 
 CSRF_COOKIE_SECURE = True 
 SECURE_REFERRER_POLICY = 'same-origin'
+
+#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
+django_heroku.settings(locals())
