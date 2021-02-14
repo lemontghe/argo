@@ -190,6 +190,7 @@ def viewads_add(request, *args, **kwargs):
         else:
             numbers = tuple(ch)
             no_plan = numbers[profile.no_plan-1]
+    if plans_count == 0: no_plan = 0
 
     if request.method == 'POST':
         addsurf_form = AddSurfForm(request.POST, instance=request.user.profile)

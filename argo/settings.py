@@ -51,7 +51,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request'
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -72,17 +72,16 @@ WSGI_APPLICATION = 'argo.wsgi.application'
 #  DATABASES = {
     #  'default': {
         #  'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #  'NAME': 'argo',
-        #  'USER': 'argo',
-        #  'PASSWORD': 'pass',
-        #  'HOST': 'adkfal',
+        #  'NAME': 'dcvp0ujnmqkvig',
+        #  'USER': 'acpzicanmguthr',
+        #  'PASSWORD': '48312921a5a350027fc2e9716efcdf95630ec70812174b7a5c31b050bbef8097',
+        #  'HOST': 'ec2-3-214-3-162.compute-1.amazonaws.com',
         #  'PORT': '5432',
     #  }
 #  }
 
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 

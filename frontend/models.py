@@ -54,8 +54,8 @@ class Ad(models.Model):
 
 
 class AdsPlan(models.Model):
-    name = models.CharField(max_length=15, blank=False, null=True, unique=True)
-    time = models.CharField(max_length=10, blank=False, null=True)
+    name = models.CharField(max_length=15, null=True, unique=True)
+    time = models.CharField(max_length=10, null=True)
     price_per_1 = models.IntegerField(default=0)
     price_per_1000 = models.IntegerField(default=0)
 
@@ -72,7 +72,7 @@ class PlansPlan(models.Model):
     per_hour = models.FloatField(default=0.00)
     per_day = models.FloatField(default=0.00)
     per_month = models.FloatField(default=0.00)
-    life_time = models.CharField(max_length=10, null=True, blank=True)
+    life_time = models.CharField(max_length=10, default="unlimited")
 
     def __str__(self):
         return f"Plan {self.id}"
