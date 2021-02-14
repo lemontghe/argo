@@ -8,3 +8,4 @@ django-compressor==2.4
 django-crispy-forms==1.10.0
 django-dispatch==1.0.1
 django-filter==2.4.0
+psycopg2-binary==2.8.6
