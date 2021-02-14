@@ -46,16 +46,22 @@ SITE_ID=1,
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #  'DIRS': [],
+        'DIRS': [path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
+        #  'OPTIONS': {
+            #  'context_processors': [
+                #  'django.template.context_processors.debug',
+                #  'django.template.context_processors.request'
+                #  'django.contrib.auth.context_processors.auth',
+                #  'django.contrib.messages.context_processors.messages',
+            #  ],
+        #  },
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request'
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+                "django.contrib.auth.context_processors.auth",
+            ]
+        }
     },
 ]
 WSGI_APPLICATION = 'argo.wsgi.application'
