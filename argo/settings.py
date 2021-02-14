@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "SECRET_KEY"
 #  SECRET_KEY = environ.get('SECRET_KEY')
 
-#  DEBUG = True
-DEBUG = False
+DEBUG = True
+#  DEBUG = False
 ALLOWED_HOSTS = ['localhost', '127.0.0.1',"argooo.herokuapp.com"]
 #  ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
 INSTALLED_APPS = [
@@ -49,19 +49,14 @@ TEMPLATES = [
         #  'DIRS': [],
         'DIRS': [path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
-        #  'OPTIONS': {
-            #  'context_processors': [
-                #  'django.template.context_processors.debug',
-                #  'django.template.context_processors.request'
-                #  'django.contrib.auth.context_processors.auth',
-                #  'django.contrib.messages.context_processors.messages',
-            #  ],
-        #  },
         'OPTIONS': {
             'context_processors': [
-                "django.contrib.auth.context_processors.auth",
-            ]
-        }
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request'
+                #  'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     },
 ]
 WSGI_APPLICATION = 'argo.wsgi.application'
