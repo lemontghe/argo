@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "SECRET_KEY"
 #  SECRET_KEY = environ.get('SECRET_KEY')
 
-DEBUG = True
+#  DEBUG = True
 #  DEBUG = False
 ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
 INSTALLED_APPS = [
@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'argo.wsgi.application'
     #  }
 #  }
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#  DATABASES = {}
+#  DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
