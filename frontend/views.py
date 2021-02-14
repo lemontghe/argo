@@ -78,8 +78,9 @@ def index(request, *args, **kwargs):
         request.session['ref_profile'] = profile.id
     except:
         pass
-
-    return render(request, 'frontend/index.html', {"count": User.objects.all().count(), "days": delta.days})
+    count = User.objects.all().count()
+    if not count: count = 0
+    return render(request, 'frontend/index.html', {"count": count, "days": delta.days})
 
 
 def about(request, *args, **kwargs):
@@ -105,7 +106,9 @@ def referrals(request):
 def stats(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    return render(request, 'frontend/stats.html', {"count": User.objects.all().count()})
+    count = User.objects.all().count()
+    if not count: count = 0
+    return render(request, 'frontend/stats.html', {"count": count})
 
 
 @login_required(login_url='login_page')
