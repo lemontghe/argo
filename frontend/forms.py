@@ -47,11 +47,8 @@ class AddSurfForm(forms.ModelForm):
 class EditSiteForm(forms.ModelForm):
     title = forms.CharField(max_length=70, min_length=7, widget=forms.TextInput(attrs={'placeholder': 'For example: Great site, watch everyone!', "class": "form-control", "type": "text"}))
     url = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'For example: https://google.com', "class": "form-control", "type": "url"}))
-    if AdsPlan.objects.count():
-        ads = AdsPlan.objects.all()
-        ch = [(ad.id, ad.name) for ad in ads]
-    else:
-        ch = [(1, " ")]
+    ads = AdsPlan.objects.all()
+    ch = [(ad.id, ad.name) for ad in ads]
     no_plan = forms.ChoiceField(required=False, choices=tuple(ch), widget=forms.Select(attrs={'class':'form-control'}))
     class Meta:
         model = Profile
@@ -60,6 +57,6 @@ class EditSiteForm(forms.ModelForm):
 
 class SiteBalanceForm(forms.ModelForm):
     coin = forms.CharField(max_length=7, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter coins', "class": "form-control form-control-alternative", "type": "number",  "step": "any", "autocomplete": "off", "id": "coin_input", "min": "0"}))
-    #  class Meta:
-        #  model = Profile
-        #  fields = ("coin", )
+    class Meta:
+        model = Profile
+        fields = ("coin", )
