@@ -5,8 +5,7 @@ import dotenv
 import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = "SECRET_KEY"
-#  SECRET_KEY = environ.get('SECRET_KEY')
+SECRET_KEY = environ.get('SECRET_KEY')
 
 DEBUG = True
 #  DEBUG = False
