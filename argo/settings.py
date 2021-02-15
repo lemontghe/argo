@@ -43,7 +43,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'frontend.urls'
+ROOT_URLCONF = 'argo.urls'
 LOGIN_REDIRECT_URL = "home_page"
 LOGOUT_REDIRECT_URL = "home_page"
 TEMPLATE_DIR = os.path.join(BASE_DIR, "frontend/templates")
