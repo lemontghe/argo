@@ -1,0 +1,581 @@
+{% load i18n static %}<!DOCTYPE html>
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Get paid to view ads. As a member, you'll get paid for each click that you generate by browsing our sponsor's ads. Get a bonus every day.">
+    <meta name="keywords" content="Earnings on the internet, View ads, Earn money from survey, Get paid to view ads">
+    <meta name="author" content="ArgonClick">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon" type="image/png">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}" charset="utf-8">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="https://appsrv1-147a1.kxcdn.com/black-dashboard/css/nucleo-icons.min.css" type="text/css" charset="utf-8">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/argon.css' %}" charset="utf-8">
+</head>
+{% load i18n %}
+
+
+<body>
+  <header class="header-global">
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--not-bottom headroom--pinned headroom--top">
+      <div class="container"> <a class="navbar-brand mr-lg-5" href="{% url 'home_page' %}"> <img src="{% static 'img/white.png' %}" alt="brand"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="navbar-collapse collapse" id="navbar_global">
+          <div class="navbar-collapse-header">
+            <div class="row">
+              <div class="col-6 collapse-brand"> <a href="{% url 'home_page' %}"> <img src="{% static 'img/blue.png' %}" alt="brand"> </a> </div>
+              <div class="col-6 collapse-close">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation"> <span></span> <span></span> </button>
+              </div>
+            </div>
+          </div>
+          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+            <li class="nav-item dropdown">
+              <a href="{% url 'home_page' %}" class="nav-link"> <i class="fa fa-book d-lg-none"></i> <span class="nav-link-inner--text">Home</span> </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="{% url 'stats_page' %}" class="nav-link"> <i class="fa fa-book d-lg-none"></i> <span class="nav-link-inner--text">Statistics</span> </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="{% url 'contacts_page' %}" class="nav-link"> <i class="fa fa-book d-lg-none"></i> <span class="nav-link-inner--text">Contacts</span> </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+          <li class="nav-item">
+            {% if request.user.is_authenticated %}
+                <a href="/account" class="btn btn-primary btn-icon"> <span class="btn-inner--icon"> <i class="fa fa-user"></i> </span> <span class="nav-link-inner--text">Account</span> </a> 
+            {% else %}
+                <a href="{% url 'login_page' %}" class="btn btn-success btn-icon"> <span class="btn-inner--icon"> <i class="fa fa-sign-in-alt mr-2"></i> </span> <span class="nav-link-inner--text">Login</span> </a>
+                <a href="{% url 'signup_page' %}" class="btn btn-info btn-icon"> <span class="btn-inner--icon"> <i class="fa fa-edit mr-2"></i> </span> <span class="nav-link-inner--text">Register</span> </a>
+            {% endif %}
+          </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="profile-page">
+    <section class="section section-lg section-shaped pb-250">
+      <div class="shape shape-style-1 shape-default"> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> </div>
+
+             <div class="row mt-3">
+            <div class="col-lg-12 text-center">
+        	<iframe data-aa="1328909" src="//ad.a-ads.com/1328909?size=468x60" scrolling="no" style="width:468px; height:60px; border:0px; padding:0; overflow:hidden" allowtransparency="true" tc9v62aa0=""></iframe>
+		    <iframe data-aa="1328909" src="//ad.a-ads.com/1328909?size=468x60" scrolling="no" style="width:468px; height:60px; border:0px; padding:0; overflow:hidden" allowtransparency="true" tc9v62aa0=""></iframe>
+			</div>
+          </div>
+		  
+      <div class="container py-lg-md d-flex">
+        <div class="col px-0">
+          <div class="row">
+            <div class="col-lg-6">
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SVG separator -->
+      <div class="separator separator-bottom separator-skew">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </section>
+    <section class="section section-lg pt-lg-0 mt--300">
+      <div class="container">
+        <div class="card card-profile shadow ">
+          <div class="px-4">
+            <div class="row justify-content-center">
+
+
+              <div class="col-lg-12">
+                <div class="card-profile-stats d-flex justify-content-center">
+                  <div>
+                  <span class="text-primary text-uppercase">Total members</span>
+                  <span class="heading h4 text-info font-weight-bold">{{count}}</span>
+                    
+                  </div>
+                  <div>
+                  <span class="text-primary text-uppercase">New members today</span>
+                    <span class="heading h4 text-info font-weight-bold">393</span>
+                   
+                  </div>
+                  <div>
+                  <span class="text-primary text-uppercase">Total payments sent</span>
+                    <span class="heading h4 text-info font-weight-bold">$38918.65</span>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-xl-12 mb-5 mb-xl-0">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h3 class="mb-0">TOP 20 PAYOUTS</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <!-- Projects table -->
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light" align="center">
+                      <tr>
+                        <th scope="col">USERNAME</th>
+                        <th scope="col">AMOUNT</th>
+                        <th scope="col">METHOD</th>
+                        <th scope="col">DAY</th>
+                      </tr>
+                    </thead>
+                    <tbody align="center">
+
+                                              <tr>
+                          <th class="notranslate"> Wi147553 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:29 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> nalugre </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:29 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> manicure97 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:28 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> hklos </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.05</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:28 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Santosh </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.03</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:27 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> vestere13 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:26 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> pieton </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.04</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:25 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> imran7023 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.13</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:25 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> shenniv </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:24 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> conkmucaran </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 2.58</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:23 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> ptcati </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.17</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:15 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> blackfury </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 2</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:12 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> btcarab </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:11 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> kimkendy </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:07 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Den2412 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.03</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/PerfectMoney.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:07 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> akheyri1379 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:07 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Taha202 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.07</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:06 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> sopnil01985 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:06 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> ghostwarrior6 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:05 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> nlaidyssin </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td>      
+                          <div class="avatar-group">
+                            <a class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </a>
+                            </div>
+                          </td>
+                          <td> 22/12/2020  12:04 </td>
+                        </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-xl-12 mb-5 mb-xl-0  mt-5 py-5 border-top">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h3 class="mb-0">TOP 20 INVESTMENT</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <!-- Projects table -->
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light" align="center">
+                      <tr>
+                        <th scope="col">USERNAME</th>
+                        <th scope="col">AMOUNT</th>
+                        <th scope="col">METHOD</th>
+                        <th scope="col">DAY</th>
+                      </tr>
+                    </thead>
+                    <tbody align="center">
+                                              <tr>
+                          <th class="notranslate"> nnznnz1 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.50</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/PerfectMoney.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:27 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> s1ema </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 20.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:25 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> SanCoIcCoo </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 10.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/PerfectMoney.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:21 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> HolHoli </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 30.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:18 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Taha202 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.11</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:07 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> elking </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 1.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/PerfectMoney.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:07 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> benaouda554 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 1.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  12:04 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> amoch </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 2.21</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  11:15 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Irontev </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 30.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  11:09 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Abdallah95 </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 4.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  10:54 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> veki77 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.02</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  09:14 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> simoseu </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 200.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:53 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> flamme01 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 2.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Faucetpay.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:49 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Himanshu53 </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 8.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:45 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> IMMUO07 </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.07</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:44 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Alfredo11 </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 68.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:35 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Megabux </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 15.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  08:03 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> Milenap </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.04</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  07:50 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> totolik1 </th>
+                          <td class="notranslate"><i class="fa fa-ruble"></i> 900.00</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  07:10 </td>
+                        </tr>
+                                              <tr>
+                          <th class="notranslate"> globyobs </th>
+                          <td class="notranslate"><i class="fa fa-dollar"></i> 0.50</td>
+                          <td class="avatar-group">
+                            <div class="avatar avatar-sm"> <img alt="Payeer" src="{% static 'img/Payeer.png' %}"> </div>
+                          </td>
+                          <td> 22/12/2020  06:50 </td>
+                        </tr>
+                                          </tbody>
+                  </table>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+   <div class="col-lg-12 text-center">
+ </div> 
+ 
+  <footer class="footer mt-4">
+
+    <div class="container">
+      <div class="row align-items-center justify-content-md-between">
+        <div class="col-md-6">
+          <div class="copyright"> © 2020 <a href="{% url 'home_page' %}">ArgonClick</a></div>
+        </div>
+        <div class="col-md-6">
+          <ul class="nav nav-footer justify-content-end">
+            <li class="nav-item"> <a href="{% url 'terms_page' %}" class="nav-link">Terms</a> </li>
+            <li class="nav-item"> <a href="{% url 'about_page' %}" class="nav-link">About Us</a> </li>
+            <li class="nav-item"> <a href="{% url 'contacts_page' %}" class="nav-link">Contacts</a> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script src="{% static 'frontend/jquery_002.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/popper.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/headroom.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<script src="{% static 'frontend/argon.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap-notify.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/bootstrap-notify_002.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/apppost.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'frontend/jquery.js' %}" type="text/javascript" charset="utf-8"></script>
+
+</body></html>
