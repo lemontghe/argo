@@ -1,16 +1,25 @@
-from pathlib import Path
-from os import path, environ
+# -*- encoding: utf-8 -*-
+
+import os
+from decouple import config
+from unipath import Path
 import dj_database_url
-import dotenv
 import django_heroku
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = environ.get('SECRET_KEY')
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = Path(__file__).parent
 
-DEBUG = True
-#  DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',"argooo.herokuapp.com"]
-#  ALLOWED_HOSTS = ["argooo.herokuapp.com", "0.0.0.0"]
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG', default=False)
+
+# load production server from .env
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -18,17 +27,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frontend.apps.FrontendConfig',
-    'compressor',
     'crispy_forms',
-    'django.contrib.sites',
-    'whitenoise.runserver_nostatic',
+    'compressor',
+    'frontend.apps.FrontendConfig',
 ]
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -37,27 +40,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-ROOT_URLCONF = 'argo.urls'
-SITE_ID=1,
+
+ROOT_URLCONF = 'frontend.urls'
+LOGIN_REDIRECT_URL = "home_page"
+LOGOUT_REDIRECT_URL = "home_page"
+TEMPLATE_DIR = os.path.join(BASE_DIR, "frontend/templates")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [path.join(BASE_DIR, "frontend/templates")],
-        'DIRS': [path.join(BASE_DIR, "templates")],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
-                'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -65,14 +66,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'argo.wsgi.application'
 
 # Database
-
-#  DATABASES = {
-    #  'default': {
-        #  'ENGINE': 'django.db.backends.sqlite3',
-        #  'NAME': BASE_DIR / 'db.sqlite3',
-    #  }
-#  }
-
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 db_from_env = dj_database_url.config(conn_max_age=600)
@@ -93,6 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -100,22 +94,29 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+#############################################################
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
+# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'frontend/static'),
 )
-MEDIA_URL = "/media/"
-MEDIA_ROOT = path.join(BASE_DIR, 'media')
-#  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-#  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
 
 CRISPY_TEMPLATE_PACK="bootstrap4"
 LOGIN_REDIRECT_URL = '/account/'
 LOGOUT_REDIRECT_URL = '/'
 TAGGIT_CASE_INSENSITIVE = True
+
+
+#  MEDIA_URL = "/media/"
+#  MEDIA_ROOT = path.join(BASE_DIR, 'media')
+#  STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+#  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 #  EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #  EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
@@ -125,22 +126,21 @@ TAGGIT_CASE_INSENSITIVE = True
 #  EMAIL_PORT = 587
 #  EMAIL_USE_TLS = True
 
-dotenv_file = path.join(BASE_DIR, ".env")
-if path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
+#  SECURE_BROWSER_XSS_FILTER = True
+#  X_FRAME_OPTIONS = 'DENY'
+#  SECURE_SSL_REDIRECT = True
+#  SECURE_HSTS_SECONDS = 3600
+#  SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#  SECURE_HSTS_PRELOAD = True
+#  SECURE_CONTENT_TYPE_NOSNIFF = True
+#  SESSION_COOKIE_SECURE = True
+#  CSRF_COOKIE_SECURE = True
+#  SECURE_REFERRER_POLICY = 'same-origin'
+#  options = DATABASES['default'].get('OPTIONS', {})
+#  options.pop('sslmode', None)
 
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 3600
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SESSION_COOKIE_SECURE = True 
-CSRF_COOKIE_SECURE = True 
-SECURE_REFERRER_POLICY = 'same-origin'
+#  dotenv_file = path.join(BASE_DIR, ".env")
+#  if path.isfile(dotenv_file):
+    #  dotenv.load_dotenv(dotenv_file)
 
-#  django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 django_heroku.settings(locals())
