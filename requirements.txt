@@ -7,5 +7,10 @@ python-dotenv==0.15.0
 django-compressor==2.4
 django-crispy-forms==1.10.0
 django-dispatch==1.0.1
-django-filter==2.4.0
+asgiref
+autopep8
+pycodestyle
+pytz
+sqlparse
+Unipath
 python-decouple
