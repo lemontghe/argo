@@ -1,9 +1,25 @@
-.svn
-__pycache__/*.pyc
-*.pyc
-frontend/__pycache__/*
-argo/__pycache__/*
-migrations/*
-migrations
-frontend/migrations
-db.sqlite3
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# tests and coverage
+*.pytest_cache
+.coverage
+
+# database & logs
+*.db
+*.sqlite3
+*.log
+
+# venv
+env
+venv
+
+# other
+.DS_Store
+
+# javascript
+package-lock.json
+
+staticfiles/*
+!staticfiles/.gitkeep 
