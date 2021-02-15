@@ -314,14 +314,15 @@ def plans(request, *args, **kwargs):
     hour = second/3600
 
     profile.per_hour = 0
-    b = save_asList(profile, profile.investment_plans)
     l = PlansPlan.objects.count()
     prof = [0]*l
     max_prof = [0]*l
+    b = save_asList(profile, profile.investment_plans)
 
     if l:
         for plan in PlansPlan.objects.all():
-            profile.per_hour += plan.per_hour*int(b[plan.id-1])
+            try: profile.per_hour += plan.per_hour*int(b[plan.id-1])
+            except: 0
             if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.count():
                 profile.investment_plans += f"0"
             if f"{plan.id}" in request.POST and request.is_ajax:
