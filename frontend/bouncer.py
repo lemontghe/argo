@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from frontend.models import Profile
+from .models import Profile
 
 with open("frontend/user_id", 'r') as f:
     a = int(f.readline())
