@@ -340,7 +340,6 @@ def plans(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
-    b = save_asList(profile, profile.investment_plans)
     for i in range(l):
         plan = PlansPlan.objects.get(id=i+1)
         max_prof[i] = 24*plan.per_hour*int(b[i])
@@ -366,7 +365,7 @@ def plans(request, *args, **kwargs):
             profile.profit = 0
             profile.plan_created = pytz.utc.localize(datetime.utcnow())
             profile.save()
-            return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0}), content_type="application/json")
+            return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0, "pb": profile.purchase_balance}), content_type="application/json")
         else:
             return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
