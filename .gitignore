@@ -24,5 +24,4 @@ package-lock.json
 staticfiles/*
 !staticfiles/.gitkeep 
 
-
 user_id
