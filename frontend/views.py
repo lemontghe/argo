@@ -17,6 +17,12 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 
 
+with open("frontend/user_id", 'r') as f:
+    a = int(f.readline())
+if a != Profile.objects.all().count()+9999:
+    f.write(str(Profile.objects.all().count()+9999))
+
+
 class PasswordResetingView(PasswordResetView):
     form_class = PasswordResetingForm
     success_url = reverse_lazy("login_page")
