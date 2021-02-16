@@ -1,2 +1,2 @@
-python frontend/bonuser.py
+web: python bouncer.py
 web: gunicorn argo.wsgi --log-file=- 
