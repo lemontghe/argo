@@ -346,15 +346,16 @@ def plans(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
-    for i in range(l):
-        plan = PlansPlan.objects.get(id=i+1)
-        max_prof[i] = 24*plan.per_hour*int(b[i])
-        if hour > 24:
-            profile.profit = 24*profile.per_hour
-            prof[i] = 24*plan.per_hour*int(b[i])
-        else:
-            profile.profit = hour*profile.per_hour
-            prof[i] = hour*plan.per_hour*int(b[i])
+    if len(profile.investment_plans):
+        for i in range(l):
+            plan = PlansPlan.objects.get(id=i+1)
+            max_prof[i] = 24*plan.per_hour*int(b[i])
+            if hour > 24:
+                profile.profit = 24*profile.per_hour
+                prof[i] = 24*plan.per_hour*int(b[i])
+            else:
+                profile.profit = hour*profile.per_hour
+                prof[i] = hour*plan.per_hour*int(b[i])
 
     if profile.profit > profile.per_hour*24:
         profile.profit = profile.per_hour*24
