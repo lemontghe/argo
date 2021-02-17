@@ -189,8 +189,8 @@ def viewads_add(request, *args, **kwargs):
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
-    profile.purchase_balance = 1200000
-    profile.save()
+    #  profile.purchase_balance = 1200000
+    #  profile.save()
 
     ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
     for i in range(plans_count):

@@ -242,7 +242,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                     if(response.profit==0){
                                         document.getElementById("Sbor").innerHTML += ".000";
                                     }
-                                    document.getElementById("progresbar").style = "width: {{max_profit}}%";
+                                    document.getElementById("progressbar").style = "width: {{max_profit}}%";
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                 },
                                 fallure: function(error){
@@ -448,7 +448,7 @@ timerId = setInterval(function(){
         url: '{% url "plans_page" %}',
         success: function(data) {
             $('.body').load('#Sbor');
-            document.getElementById("progresbar").style = "width: {{max_profit}}%";
+            document.getElementById("progressbar").style = "width: {{max_profit}}%";
             clearInterval(0);
         }
     });
