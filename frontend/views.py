@@ -366,7 +366,7 @@ def plans(request, *args, **kwargs):
                     profile.investment_plans = a
                     profile.save()
                     plan.save()
-                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "pcs": b[plan.id-1], "p": prof[plan.id-1], "mp": max_prof[plan.id]}), content_type="application/json")
+                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "pcs": b[plan.id-1], "p": prof[plan.id-1], "mp": max_prof[plan.id-1]}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
