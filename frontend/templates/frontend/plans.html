@@ -243,6 +243,16 @@ your plan, the greater your income. Proceeds will be distributed between
                                         document.getElementById("Sbor").innerHTML += ".000";
                                     }
                                     document.getElementById("progressbar").style = "width: {{max_profit}}%";
+                                    if (max_profit <= 50){
+                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
+                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
+                                    }else if (50 < max_profit < 100){
+                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "75");
+                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-warning");
+                                    }else if (max_profit >= 100) {
+                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "100");
+                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-danger");
+                                    }
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                 },
                                 fallure: function(error){
@@ -261,7 +271,7 @@ your plan, the greater your income. Proceeds will be distributed between
                       <br />
                     {% if max_profit <= 50 %}
                       <div class="progress">
-                          <div class="progress-bar bg-success" role="progressbar" id="progresbar" style="width: {{max_profit}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-success" role="progressbar" id="progressbar" style="width: {{max_profit}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     {% elif 50 < max_profit < 100 %}
                       <div class="progress">
@@ -449,6 +459,16 @@ timerId = setInterval(function(){
         success: function(data) {
             $('.body').load('#Sbor');
             document.getElementById("progressbar").style = "width: {{max_profit}}%";
+            if (max_profit <= 50){
+                document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
+                document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
+            }else if (50 < max_profit < 100){
+                document.getElementById("progressbar").setAttribute("aria-valuenow", "75");
+                document.getElementById("progressbar").setAttribute("class", "progress-bar bg-warning");
+            }else if (max_profit >= 100) {
+                document.getElementById("progressbar").setAttribute("aria-valuenow", "100");
+                document.getElementById("progressbar").setAttribute("class", "progress-bar bg-danger");
+            }
             clearInterval(0);
         }
     });
