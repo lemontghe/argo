@@ -174,7 +174,12 @@ def viewads(request, *args, **kwargs):
     for i in range(profile_count):
         p = Profile.objects.get(code=i+10000)
         if p.ads in [None, '']: continue
-        ads.append(save_asList(p, p.ads))
+        a = []
+        adss = save_asList(p, p.ads)
+        for ad in adss:
+            if int(ad[3]) > 1:
+                a.append(ad)
+        ads.append(a)
     return render(request, 'frontend/viewads.html', {"profile": profile, "ads": ads})
 
 
