@@ -243,13 +243,13 @@ your plan, the greater your income. Proceeds will be distributed between
                                         document.getElementById("Sbor").innerHTML += ".000";
                                     }
                                     document.getElementById("progressbar").style = "width: {{max_profit}}%";
-                                    if (max_profit <= 50){
+                                    if ({{max_profit}} <= 50){
                                         document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
                                         document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-                                    }else if (50 < max_profit < 100){
+                                    }else if (50 < {{max_profit}} < 100){
                                         document.getElementById("progressbar").setAttribute("aria-valuenow", "75");
                                         document.getElementById("progressbar").setAttribute("class", "progress-bar bg-warning");
-                                    }else if (max_profit >= 100) {
+                                    }else if ({{max_profit}} >= 100) {
                                         document.getElementById("progressbar").setAttribute("aria-valuenow", "100");
                                         document.getElementById("progressbar").setAttribute("class", "progress-bar bg-danger");
                                     }
@@ -459,13 +459,13 @@ timerId = setInterval(function(){
         success: function(data) {
             $('.body').load('#Sbor');
             document.getElementById("progressbar").style = "width: {{max_profit}}%";
-            if (max_profit <= 50){
+            if ({{max_profit}} <= 50){
                 document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
                 document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-            }else if (50 < max_profit < 100){
+            }else if (50 < {{max_profit}} < 100){
                 document.getElementById("progressbar").setAttribute("aria-valuenow", "75");
                 document.getElementById("progressbar").setAttribute("class", "progress-bar bg-warning");
-            }else if (max_profit >= 100) {
+            }else if ({{max_profit}} >= 100) {
                 document.getElementById("progressbar").setAttribute("aria-valuenow", "100");
                 document.getElementById("progressbar").setAttribute("class", "progress-bar bg-danger");
             }
