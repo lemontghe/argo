@@ -376,7 +376,8 @@ your plan, the greater your income. Proceeds will be distributed between
                                           }
                                         });
                                     }
-                                    $("#show_table").load(location.href + " #show_table");
+                                    {% comment %} $("#show_table").load(location.href + " #show_table"); {% endcomment %}
+                                    document.getElementById("pcs{{plan.id}}").innerHTML = response.pcs+" pcs";
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
 
                                 },
@@ -401,7 +402,7 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="col-lg-12">
                       <div>
                         <label class="form-control-label">Purchased:</label>
-                        <span class="float-right">{{ pcs }} pcs</span>
+                        <span class="float-right" id="pcs{{plan.id}}">{{ pcs }} pcs</span>
                       </div>
                       <div>
                         <label class="form-control-label">My Plan:</label>
