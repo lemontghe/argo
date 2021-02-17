@@ -176,7 +176,7 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="text-center">
                         <h3>Earn: <span class="fas fa-coins notranslate" id="Sbor"> {{ profit|floatformat:3 }}</span></h3>
                       <input type="hidden" id="last_sbor" value="808429">
-                      <div class="h4 font-weight-300">Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour</div>
+                      <div class="h4 font-weight-300" id="profit">Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour</div>
                       <form action="{% url 'plans_page' %}" id="collectForm" method="post">
                         {% csrf_token %}
                         <button class="btn btn-default" id="collect-btn" type="submit">
@@ -242,17 +242,11 @@ your plan, the greater your income. Proceeds will be distributed between
                                     if(response.profit==0){
                                         document.getElementById("Sbor").innerHTML += ".000";
                                     }
-                                    document.getElementById("progressbar").style = "width: {{max_profit}}%";
-                                    if ({{max_profit}} <= 50){
-                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
-                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-                                    }else if (50 < {{max_profit}} < 100){
-                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "75");
-                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-warning");
-                                    }else if ({{max_profit}} >= 100) {
-                                        document.getElementById("progressbar").setAttribute("aria-valuenow", "100");
-                                        document.getElementById("progressbar").setAttribute("class", "progress-bar bg-danger");
-                                    }
+                                    document.getElementById("progressbar").style = "width: 0";
+                                    document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
+                                    document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
+                                    document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour';
+
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                 },
                                 fallure: function(error){
