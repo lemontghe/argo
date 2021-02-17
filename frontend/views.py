@@ -346,7 +346,7 @@ def plans(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
-    if len(profile.investment_plans):
+    if len(b):
         for i in range(l):
             plan = PlansPlan.objects.get(id=i+1)
             max_prof[i] = 24*plan.per_hour*int(b[i])
