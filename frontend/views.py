@@ -19,11 +19,13 @@ from django.views.decorators.http import require_GET
 with open("frontend/user_id", 'r') as f:
     try:
         a = int(f.readline())
-    except: pass
-    if str(f.readline()) == '': a = 9999
-with open("frontend/user_id", 'w') as f:
-    if a != Profile.objects.all().count()+9999:
-        print(Profile.objects.all().count()+9999)
+    except:
+        if str(f.readline()) == '':
+            a = 9999
+    if a != Profile.objects.all().count()+9999: flg = True
+    else: flg = False
+if flg:
+    with open("frontend/user_id", 'w') as f:
         f.write(str(Profile.objects.all().count()+9999))
 
 class PasswordResetingView(PasswordResetView):
