@@ -350,28 +350,48 @@ def plans(request, *args, **kwargs):
     if l:
         for plan in PlansPlan.objects.all():
             if f"{plan.id}" in request.POST and request.is_ajax:
+                pos = int(list(request.POST)[-1])-1
                 if profile.purchase_balance >= plan.price:
                     profile.purchase_balance -= plan.price
-                    b[plan.id-1] = str(int(b[plan.id-1])+1)
+                    b[pos] = str(int(b[pos])+1)
                     a = ""
                     for i in b:
                         a += str(i)
                         a += ""
-                    try: profile.per_hour += plan.per_hour*int(b[plan.id-1])
-                    except: pass
-                    #  for i in range(l):
-                        #  plan = PlansPlan.objects.get(id=i+1)
-                        #  max_prof[i] = 24*plan.per_hour*int(b[i])
-                        #  if hour > 24:
-                            #  profile.profit = 24*profile.per_hour
-                            #  prof[i] = 24*plan.per_hour*int(b[i])
-                        #  else:
-                            #  profile.profit = hour*profile.per_hour
-                            #  prof[i] = hour*plan.per_hour*int(b[i])
                     profile.investment_plans = a
                     profile.save()
                     plan.save()
-                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "pcs": b[plan.id-1], "p": prof[plan.id-1], "mp": max_prof[plan.id-1]}), content_type="application/json")
+
+                    a = pytz.utc.localize(datetime.utcnow())
+                    b = a-profile.plan_created
+                    second = b.seconds
+                    hour = second/3600
+                    profile.per_hour = 0
+                    l = PlansPlan.objects.count()
+                    prof = [0]*l
+                    max_prof = [0]*l
+                    b = save_asList(profile, profile.investment_plans)
+                    for plan in PlansPlan.objects.all():
+                        try: profile.per_hour += plan.per_hour*int(b[pos])
+                        except: pass
+                        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.count():
+                            profile.investment_plans += f"0"
+                            print("somefuckingthing"*20)
+                    if len(b):
+                        for i in range(l):
+                            plan = PlansPlan.objects.get(id=i+1)
+                            max_prof[i] = 24*plan.per_hour*int(b[i])
+                            if hour > 24:
+                                profile.profit = 24*profile.per_hour
+                                prof[i] = 24*plan.per_hour*int(b[i])
+                            else:
+                                profile.profit = hour*profile.per_hour
+                                prof[i] = hour*plan.per_hour*int(b[i])
+
+                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
+                                                    "pcs": b[pos], "p": prof[pos], 
+                                                    "mp": max_prof[pos], "ph": profile.per_hour,
+                                                    "profit": profile.profit}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
@@ -398,6 +418,7 @@ def plans(request, *args, **kwargs):
 
     return render(request, 'frontend/plans.html', {"profile": profile,
                                                    "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
+                                                   "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
                                                    "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
                                                    "profit": profile.profit,
                                                    "max_profit": max_profit,

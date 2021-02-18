@@ -245,9 +245,10 @@ your plan, the greater your income. Proceeds will be distributed between
                                     document.getElementById("progressbar").style = "width: 0";
                                     document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
                                     document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-                                    document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour';
-
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
+                                  {% for i, mp in sbori %}
+                                    document.getElementById("Sbor{{i}}").innerHTML = "0.00/"+parseFloat({{mp}}).toFixed(2);
+                                  {% endfor %}
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
@@ -370,10 +371,11 @@ your plan, the greater your income. Proceeds will be distributed between
                                           }
                                         });
                                     }
+                                    document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(2);
                                     document.getElementById("pcs{{plan.id}}").innerHTML = response.pcs+" pcs";
                                     document.getElementById("Sbor{{plan.id}}").innerHTML = parseFloat(response.p).toFixed(2)+"/"+parseFloat(response.mp).toFixed(2);
                                     document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
-
+                                    document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
@@ -444,7 +446,6 @@ your plan, the greater your income. Proceeds will be distributed between
 <script src="{% static 'frontend/bootstrap-notify_002.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'frontend/apppost.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endcompress %}
-
 
 
 <script type="text/javascript" language="javascript">
