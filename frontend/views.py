@@ -16,12 +16,13 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 
-
-#  with open("frontend/user_id", 'r') as f:
-    #  a = int(f.readline())
-#  if a != Profile.objects.all().count()+9999:
-    #  f.write(str(Profile.objects.all().count()+9999))
-
+with open("frontend/user_id", 'r') as f:
+    try:
+        a = int(f.readline())
+    except: a = 9999
+with open("frontend/user_id", 'w') as f:
+    if a != Profile.objects.all().count()+9999:
+        f.write(str(Profile.objects.all().count()+9999))
 
 class PasswordResetingView(PasswordResetView):
     form_class = PasswordResetingForm
@@ -194,8 +195,8 @@ def viewads_add(request, *args, **kwargs):
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
-    #  profile.purchase_balance = 1200000
-    #  profile.save()
+    profile.purchase_balance = 1200000
+    profile.save()
 
     ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
     for i in range(plans_count):

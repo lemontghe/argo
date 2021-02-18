@@ -12,3 +12,4 @@ pytz
 sqlparse
 Unipath
 python-decouple
+django-staticfiles==1.2.1
