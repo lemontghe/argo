@@ -29,7 +29,6 @@ class Profile(models.Model):
     title = models.CharField(max_length=70, blank=True, null=True)
     url = models.URLField(blank=True, max_length=200)
     ads = models.TextField(blank=True, null=True)
-    plans = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username}-{self.code}"

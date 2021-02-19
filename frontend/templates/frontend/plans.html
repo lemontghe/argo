@@ -174,7 +174,7 @@ your plan, the greater your income. Proceeds will be distributed between
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="text-center">
-                        <h3>Earn: <span class="fas fa-coins notranslate" id="Sbor"> {{ profit|floatformat:3 }}</span></h3>
+                        <h3>Earn: <span class="fas fa-coins notranslate" id="Sbor"> {{ profile.profit|floatformat:3 }}</span></h3>
                       <input type="hidden" id="last_sbor" value="808429">
                       <div class="h4 font-weight-300" id="profit">Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour</div>
                       <form action="{% url 'plans_page' %}" id="collectForm" method="post">
@@ -453,7 +453,7 @@ timerId = setInterval(function(){
     $.ajax({
         url: '{% url "plans_page" %}',
         success: function(data) {
-            $('.body').load('#Sbor');
+            document.getElementById("Sbor").innerHTML = ' '+parseFloat({{profile.profit}}).toFixed(2);
             document.getElementById("progressbar").style = "width: {{max_profit}}%";
             if ({{max_profit}} <= 50){
                 document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
@@ -468,7 +468,7 @@ timerId = setInterval(function(){
             clearInterval(0);
         }
     });
-}, 300000)
+}, 5000)
 
 </script>
 

@@ -109,11 +109,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'frontend/'),
+    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR, "staticfiles"),
+
 )
-#  STATICFILES_FINDERS = (
-    #  "compressor.finders.CompressorFinder",
-#  )
+STATICFILES_FINDERS = (
+    "compressor.finders.CompressorFinder",
+)
 
 
 CRISPY_TEMPLATE_PACK="bootstrap4"

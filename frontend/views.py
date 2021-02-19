@@ -158,7 +158,8 @@ def save_asList(profile, obj):
         else:
             a = a.replace('', '').split("ው")
         if '' in a: a.remove('')
-        if obj == profile.investment_plans: return a
+        if obj == profile.investment_plans:
+            return a
         b = []
         if a[-1] == "Started" or a[-1] == "Stopped":
             b = [a]
@@ -192,7 +193,7 @@ def viewads(request, *args, **kwargs):
 def viewads_add(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    plans_count = AdsPlan.objects.count()
+    plans_count = AdsPlan.objects.all().count()
     plans = [ad for ad in AdsPlan.objects.all()]
     details = []
     if profile.no_plan in ['no_plan', None]: profile.no_plan = 0
@@ -321,8 +322,7 @@ def payment(request, *args, **kwargs):
 def plans(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    if profile.plans in ['plans', None]: profile.ads = ''
-    if profile.investment_plans in ['plans', None]: profile.investment_plans = ''
+    if profile.investment_plans in ['investment_plans', None]: profile.investment_plans = ''
 
     a = pytz.utc.localize(datetime.utcnow())
     b = a-profile.plan_created
@@ -330,20 +330,24 @@ def plans(request, *args, **kwargs):
     hour = second/3600
 
     profile.per_hour = 0
-    l = PlansPlan.objects.count()
+    l = PlansPlan.objects.all().count()
     prof = [0]*l
     max_prof = [0]*l
     b = save_asList(profile, profile.investment_plans)
-
+    idlist = []
+    plans = []
     for plan in PlansPlan.objects.all():
+        idlist.append(plan.id-1)
         try: profile.per_hour += plan.per_hour*int(b[plan.id-1])
         except: pass
-        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.count():
+        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
             profile.investment_plans += f"0"
 
     if len(b):
-        for i in range(l):
-            plan = PlansPlan.objects.get(id=i+1)
+        for i in idlist:
+            plans.append(PlansPlan.objects.get(id=i+1))
+        for i in range(PlansPlan.objects.all().count()):
+            plan = plans[i]
             max_prof[i] = 24*plan.per_hour*int(b[i])
             if hour > 24:
                 profile.profit = 24*profile.per_hour
@@ -355,14 +359,14 @@ def plans(request, *args, **kwargs):
     if l:
         for plan in PlansPlan.objects.all():
             if f"{plan.id}" in request.POST and request.is_ajax:
-                pos = int(list(request.POST)[-1])-1
+                pos = int(list(request.POST)[-1])
+                pos = plans.index(PlansPlan.objects.get(id=pos))
                 if profile.purchase_balance >= plan.price:
                     profile.purchase_balance -= plan.price
                     b[pos] = str(int(b[pos])+1)
                     a = ""
                     for i in b:
-                        a += str(i)
-                        a += ""
+                        a += i+""
                     profile.investment_plans = a
                     profile.save()
                     plan.save()
@@ -372,19 +376,20 @@ def plans(request, *args, **kwargs):
                     second = b.seconds
                     hour = second/3600
                     profile.per_hour = 0
-                    l = PlansPlan.objects.count()
+                    l = PlansPlan.objects.all().count()
                     prof = [0]*l
                     max_prof = [0]*l
                     b = save_asList(profile, profile.investment_plans)
                     for plan in PlansPlan.objects.all():
                         try: profile.per_hour += plan.per_hour*int(b[pos])
                         except: pass
-                        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.count():
+                        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
                             profile.investment_plans += f"0"
-                            print("somefuckingthing"*20)
                     if len(b):
-                        for i in range(l):
-                            plan = PlansPlan.objects.get(id=i+1)
+                        for i in idlist:
+                            plans.append(PlansPlan.objects.get(id=i+1))
+                        for i in range(PlansPlan.objects.all().count()):
+                            plan = plans[i]
                             max_prof[i] = 24*plan.per_hour*int(b[i])
                             if hour > 24:
                                 profile.profit = 24*profile.per_hour
@@ -425,7 +430,6 @@ def plans(request, *args, **kwargs):
                                                    "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
                                                    "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
                                                    "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
-                                                   "profit": profile.profit,
                                                    "max_profit": max_profit,
                                                    })
 
@@ -471,7 +475,7 @@ def account(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     direct_referrals = profile.recs_number()
     if profile.investment_plans == None: profile.investment_plans = ''
-    profile_count = Profile.objects.count()
+    profile_count = Profile.objects.all().count()
     ads = []
     count = 0
     for i in range(profile_count):
