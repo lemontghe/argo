@@ -361,6 +361,11 @@ your plan, the greater your income. Proceeds will be distributed between
                                             exit: 'animated fadeOutRight'
                                           }
                                         });
+                                        document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3);
+                                        document.getElementById("pcs{{plan.id}}").innerHTML = response.pcs+" pcs";
+                                        document.getElementById("Sbor{{plan.id}}").innerHTML = parseFloat(response.p).toFixed(2)+"/"+parseFloat(response.mp).toFixed(2);
+                                        document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
+                                        document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
                                     }else{
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You do not have enough funds in your Purchase Balance</span>', {
                                           type: 'danger',
@@ -371,11 +376,6 @@ your plan, the greater your income. Proceeds will be distributed between
                                           }
                                         });
                                     }
-                                    document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3);
-                                    document.getElementById("pcs{{plan.id}}").innerHTML = response.pcs+" pcs";
-                                    document.getElementById("Sbor{{plan.id}}").innerHTML = parseFloat(response.p).toFixed(2)+"/"+parseFloat(response.mp).toFixed(2);
-                                    document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
-                                    document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
                                 },
                                 fallure: function(error){
                                     var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| '+error+'</span>', {
