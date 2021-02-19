@@ -16,18 +16,6 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 
-with open("frontend/user_id", 'r') as f:
-    try:
-        a = int(f.readline())
-    except:
-        if str(f.readline()) == '':
-            a = 9999
-    if a != Profile.objects.all().count()+9999: flg = True
-    else: flg = False
-if flg:
-    with open("frontend/user_id", 'w') as f:
-        f.write(str(Profile.objects.all().count()+9999))
-
 class PasswordResetingView(PasswordResetView):
     form_class = PasswordResetingForm
     success_url = reverse_lazy("login_page")
@@ -178,7 +166,7 @@ def viewads(request, *args, **kwargs):
     profile_count = Profile.objects.count()
     ads = []
     for i in range(profile_count):
-        p = Profile.objects.get(code=i+10000)
+        p = Profile.objects.get(code=i+1)
         if p.ads in [None, '']: continue
         a = []
         adss = save_asList(p, p.ads)
@@ -375,20 +363,20 @@ def plans(request, *args, **kwargs):
                     profile.save()
                     plan.save()
 
-                    a = pytz.utc.localize(datetime.utcnow())
-                    b = a-profile.plan_created
-                    second = b.seconds
-                    hour = second/3600
-                    profile.per_hour = 0
-                    l = PlansPlan.objects.all().count()
-                    prof = [0]*l
-                    max_prof = [0]*l
-                    b = save_asList(profile, profile.investment_plans)
-                    for plan in PlansPlan.objects.all():
-                        try: profile.per_hour += plan.per_hour*int(b[pos])
-                        except: pass
-                        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
-                            profile.investment_plans += f"0"
+                    #  a = pytz.utc.localize(datetime.utcnow())
+                    #  b = a-profile.plan_created
+                    #  second = b.seconds
+                    #  hour = second/3600
+                    #  profile.per_hour = 0
+                    #  l = PlansPlan.objects.all().count()
+                    #  prof = [0]*l
+                    #  max_prof = [0]*l
+                    #  b = save_asList(profile, profile.investment_plans)
+                    #  for plan in PlansPlan.objects.all():
+                        #  try: profile.per_hour += plan.per_hour*int(b[pos])
+                        #  except: pass
+                        #  if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
+                            #  profile.investment_plans += f"0"
                     if len(b):
                         for i in idlist:
                             plans.append(PlansPlan.objects.get(id=i+1))
@@ -401,7 +389,7 @@ def plans(request, *args, **kwargs):
                             else:
                                 profile.profit = hour*profile.per_hour
                                 prof[i] = hour*plan.per_hour*int(b[i])
-
+#
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
                                                     "pcs": b[pos], "p": prof[pos], 
                                                     "mp": max_prof[pos], "ph": profile.per_hour,
@@ -435,6 +423,7 @@ def plans(request, *args, **kwargs):
                                                    "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
                                                    "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
                                                    "max_profit": max_profit,
+                                                   "a": [i.id for i in PlansPlan.objects.all()]
                                                    })
 
 
@@ -483,7 +472,7 @@ def account(request, *args, **kwargs):
     ads = []
     count = 0
     for i in range(profile_count):
-        p = Profile.objects.get(code=i+10000)
+        p = Profile.objects.get(code=i+1)
         if p.ads in [None, '']: continue
         ads.append(save_asList(p, p.ads))
     for ad in ads:

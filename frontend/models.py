@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .utils import generate_ref_code
 
 
 class Profile(models.Model):
@@ -38,7 +37,7 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         if self.code == '':
-            code = generate_ref_code()
+            code = self.recs_number()+1
             self.code = code
         super().save(*args, **kwargs)
 
@@ -53,7 +52,7 @@ class Ad(models.Model):
 
 
 class AdsPlan(models.Model):
-    name = models.CharField(max_length=15, null=True, unique=True)
+    name = models.CharField(max_length=25, null=True, unique=True)
     time = models.CharField(max_length=10, null=True)
     price_per_1 = models.IntegerField(default=0)
     price_per_1000 = models.IntegerField(default=0)
