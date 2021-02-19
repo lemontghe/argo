@@ -341,12 +341,16 @@ def plans(request, *args, **kwargs):
         try: profile.per_hour += plan.per_hour*int(b[plan.id-1])
         except: pass
         if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
-            profile.investment_plans += f"0"
+            profile.investment_plans += "0"
 
     if len(b):
         for i in idlist:
             plans.append(PlansPlan.objects.get(id=i+1))
-        for i in range(PlansPlan.objects.all().count()):
+        if len(b) < l:
+            for i in range(len(b), l):
+                profile.investment_plans += "0"
+                b.append('0')
+        for i in range(l):
             plan = plans[i]
             max_prof[i] = 24*plan.per_hour*int(b[i])
             if hour > 24:
