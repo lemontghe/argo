@@ -176,11 +176,8 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="text-center">
                         <h3 id="SborHead">Earn: <span class="fas fa-coins notranslate" id="Sbor"> {{ profile.profit|floatformat:3 }}</span></h3>
                       <input type="hidden" id="last_sbor" value="808429">
-                      <div class="h4 font-weight-300" id="profit">Current profit: <i class="fas fa-coins"></i> {{ profile.per_hour|floatformat:2 }}/Hour</div>
-                      <script>
-                          alert("{{ profile.per_hour|floatformat:2 }}");
-                      </script>
-                      <form action="{% url 'plans_page' %}" id="collectForm" method="post">
+                      <div class="h4 font-weight-300" id="profit">Current profit: <i class="fas fa-coins"></i> {{ per_hour|floatformat:2 }}/Hour</div>
+                      <form action="{% url 'plans_page' %}" id="collecteorm" method="post">
                         {% csrf_token %}
                         <button class="btn btn-default" id="collect-btn" type="submit">
                           <span class="btn-inner--icon"><i class="fa fa-coins"></i></span>

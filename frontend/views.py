@@ -427,6 +427,7 @@ def plans(request, *args, **kwargs):
                                                    "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
                                                    "pcs": sum([int(i) for i in save_asList(profile, profile.investment_plans)]),
                                                    "max_profit": max_profit,
+                                                   "per_hour": profile.per_hour,
                                                    "a": [i.id for i in PlansPlan.objects.all()]
                                                    })
 
