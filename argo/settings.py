@@ -113,9 +113,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "staticfiles"),
 
 )
-#  STATICFILES_FINDERS = (
-    #  "compressor.finders.CompressorFinder",
-#  )
+STATICFILES_FINDERS = (
+    "compressor.finders.CompressorFinder",
+)
 
 
 CRISPY_TEMPLATE_PACK="bootstrap4"

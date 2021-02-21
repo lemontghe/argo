@@ -365,21 +365,21 @@ def plans(request, *args, **kwargs):
                     profile.save()
                     plan.save()
 
-                    #  a = pytz.utc.localize(datetime.utcnow())
-                    #  b = a-profile.plan_created
-                    #  second = b.seconds
-                    #  hour = second/3600
-                    #  profile.per_hour = 0
-                    #  l = PlansPlan.objects.all().count()
-                    #  prof = [0]*l
-                    #  max_prof = [0]*l
-                    #  b = save_asList(profile, profile.investment_plans)
-                    #  for plan in PlansPlan.objects.all():
-                        #  try: profile.per_hour += plan.per_hour*int(b[pos])
-                        #  except: pass
-                        #  if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
-                            #  profile.investment_plans += f"0"
-                    #  profile.save()
+                    a = pytz.utc.localize(datetime.utcnow())
+                    b = a-profile.plan_created
+                    second = b.seconds
+                    hour = second/3600
+                    profile.per_hour = 0
+                    l = PlansPlan.objects.all().count()
+                    prof = [0]*l
+                    max_prof = [0]*l
+                    b = save_asList(profile, profile.investment_plans)
+                    for plan in PlansPlan.objects.all():
+                        try: profile.per_hour += plan.per_hour*int(b[pos])
+                        except: pass
+                        if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
+                            profile.investment_plans += f"0"
+                    profile.save()
                     if len(b):
                         for i in idlist:
                             plans.append(PlansPlan.objects.get(id=i+1))
