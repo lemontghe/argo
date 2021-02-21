@@ -394,7 +394,6 @@ def plans(request, *args, **kwargs):
                                 prof[i] = hour*plan.per_hour*int(b[i])
                         profile.save()
 
-                    print(profile.plan_created)
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
                                                     "pcs": b[pos], "p": prof[pos], 
                                                     "mp": max_prof[pos], "ph": profile.per_hour,
@@ -423,7 +422,6 @@ def plans(request, *args, **kwargs):
             return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
 
-    print(profile.plan_created)
     return render(request, 'frontend/plans.html', {"profile": profile,
                                                    "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
                                                    "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
