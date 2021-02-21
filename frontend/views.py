@@ -394,6 +394,7 @@ def plans(request, *args, **kwargs):
                                 prof[i] = hour*plan.per_hour*int(b[i])
                         profile.save()
 
+                    print(profile.per_hour)
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
                                                     "pcs": b[pos], "p": prof[pos], 
                                                     "mp": max_prof[pos], "ph": profile.per_hour,
@@ -417,11 +418,13 @@ def plans(request, *args, **kwargs):
             profile.profit = 0
             profile.plan_created = pytz.utc.localize(datetime.utcnow())
             profile.save()
+            print(profile.per_hour)
             return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0, "pb": profile.purchase_balance}), content_type="application/json")
         else:
             return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
 
+    print(profile.per_hour)
     return render(request, 'frontend/plans.html', {"profile": profile,
                                                    "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
                                                    "sbori": zip(range(1, PlansPlan.objects.all().count()+1), max_prof),
