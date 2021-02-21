@@ -460,9 +460,9 @@ timerId = setInterval(function(){
             document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML;
             $('#balancediv').html($('#balance',data));
             document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML;
-            {% for i in a %}
-                $('#sbordiv{{i}}').html($('#Sbor{{i}}',data));
-            {% endfor %}
+            {% comment %} {% for i in a %} {% endcomment %}
+                {% comment %} $('#sbordiv{{i}}').html($('#Sbor{{i}}',data)); {% endcomment %}
+            {% comment %} {% endfor %} {% endcomment %}
             clearInterval(0);
         }
     });
