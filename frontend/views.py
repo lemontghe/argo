@@ -393,7 +393,7 @@ def plans(request, *args, **kwargs):
                                 profile.profit = hour*profile.per_hour
                                 prof[i] = hour*plan.per_hour*int(b[i])
                         profile.save()
-#
+
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
                                                     "pcs": b[pos], "p": prof[pos], 
                                                     "mp": max_prof[pos], "ph": profile.per_hour,
