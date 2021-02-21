@@ -330,6 +330,7 @@ def plans(request, *args, **kwargs):
         except: pass
         if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
             profile.investment_plans += "0"
+    profile.save()
 
     if len(b):
         for i in idlist:
@@ -347,6 +348,7 @@ def plans(request, *args, **kwargs):
             else:
                 profile.profit = hour*profile.per_hour
                 prof[i] = hour*plan.per_hour*int(b[i])
+        profile.save()
 
     if l:
         for plan in PlansPlan.objects.all():
@@ -377,6 +379,7 @@ def plans(request, *args, **kwargs):
                         #  except: pass
                         #  if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
                             #  profile.investment_plans += f"0"
+                    #  profile.save()
                     if len(b):
                         for i in idlist:
                             plans.append(PlansPlan.objects.get(id=i+1))
@@ -389,6 +392,7 @@ def plans(request, *args, **kwargs):
                             else:
                                 profile.profit = hour*profile.per_hour
                                 prof[i] = hour*plan.per_hour*int(b[i])
+                        profile.save()
 #
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
                                                     "pcs": b[pos], "p": prof[pos], 
@@ -404,6 +408,7 @@ def plans(request, *args, **kwargs):
         max_profit = 0
     else:
         max_profit = int((profile.profit/(profile.per_hour*24)*100))
+    profile.save()
 
     if "collect" in request.POST:
         if request.is_ajax:
@@ -416,7 +421,6 @@ def plans(request, *args, **kwargs):
         else:
             return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
-    profile.save()
 
     return render(request, 'frontend/plans.html', {"profile": profile,
                                                    "plans": zip(PlansPlan.objects.all() if l else [], prof, max_prof, save_asList(profile, profile.investment_plans)),
