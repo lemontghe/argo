@@ -321,6 +321,7 @@ def plans(request, *args, **kwargs):
             if hour > 24:
                 profile.profit = 24*(plan.per_hour*profile.per_hour)
             else:
+<<<<<<< HEAD
                 profile.profit = hour*(plan.per_hour*profile.per_hour)
         except:
             plan = None
@@ -342,6 +343,62 @@ def plans(request, *args, **kwargs):
 
     else: plan = None
 
+=======
+                profile.profit = hour*profile.per_hour
+                prof[i] = hour*plan.per_hour*int(b[i])
+        profile.save()
+
+    if l:
+        for plan in PlansPlan.objects.all():
+            if f"{plan.id}" in request.POST and request.is_ajax:
+                pos = int(list(request.POST)[-1])
+                pos = plans.index(PlansPlan.objects.get(id=pos))
+                if profile.purchase_balance >= plan.price:
+                    profile.purchase_balance -= plan.price
+                    b[pos] = str(int(b[pos])+1)
+                    a = ""
+                    for i in b:
+                        a += i+""
+                    profile.investment_plans = a
+                    profile.save()
+                    plan.save()
+
+                    #  a = pytz.utc.localize(datetime.utcnow())
+                    #  b = a-profile.plan_created
+                    #  second = b.seconds
+                    #  hour = second/3600
+                    #  profile.per_hour = 0
+                    #  l = PlansPlan.objects.all().count()
+                    #  prof = [0]*l
+                    #  max_prof = [0]*l
+                    #  b = save_asList(profile, profile.investment_plans)
+                    #  for plan in PlansPlan.objects.all():
+                        #  try: profile.per_hour += plan.per_hour*int(b[pos])
+                        #  except: pass
+                        #  if len(save_asList(profile, profile.investment_plans)) != PlansPlan.objects.all().count():
+                            #  profile.investment_plans += f"0"
+                    #  profile.save()
+                    if len(b):
+                        for i in idlist:
+                            plans.append(PlansPlan.objects.get(id=i+1))
+                        for i in range(PlansPlan.objects.all().count()):
+                            plan = plans[i]
+                            max_prof[i] = 24*plan.per_hour*int(b[i])
+                            if hour > 24:
+                                profile.profit = 24*profile.per_hour
+                                prof[i] = 24*plan.per_hour*int(b[i])
+                            else:
+                                profile.profit = hour*profile.per_hour
+                                prof[i] = hour*plan.per_hour*int(b[i])
+                        profile.save()
+
+                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, 
+                                                    "pcs": b[pos], "p": prof[pos], 
+                                                    "mp": max_prof[pos], "ph": profile.per_hour,
+                                                    "profit": profile.profit}), content_type="application/json")
+                else:
+                    return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+>>>>>>> fd5a5f94639480d7fae7add766ef3a5e78573408
 
     if profile.profit > profile.per_hour*24:
         profile.profit = profile.per_hour*24
