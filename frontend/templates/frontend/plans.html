@@ -239,7 +239,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                     }else{
                                             var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Please before collecting purchase an amount of power</span>', {
                                               type: 'danger',
-                                              allow_dismiss: true,
+                                        n      allow_dismiss: true,
                                               animate: {
                                                 enter: 'animated fadeInRight',
                                                 exit: 'animated fadeOutRight'
@@ -356,19 +356,19 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="col-sm-3" style='left: 800px;top: -34px;'>
                       <div>
                         <label class="form-control-label">Per hour:</label>
-                        <span class="float-right" >{{plan.per_hour}} coin</span>
+                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per day:</label>
-                        <span class="float-right" >{{plan.per_hour}} coin</span>
+                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per month:</label>
-                        <span class="float-right" >{{plan.per_hour}} coin</span>
+                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per year:</label>
-                        <span class="float-right" >{{plan.per_hour}} coin</span>
+                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
                       </div>
                     </div>
                   </div>
