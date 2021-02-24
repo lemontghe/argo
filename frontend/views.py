@@ -326,11 +326,9 @@ def plans(request, *args, **kwargs):
             plan = None
             profile.profit = 0
 
-        print(plan)
         if plan:
             if f"inv" in request.POST and request.is_ajax:
                 coin = int(request.POST["coin"])
-                print(coin)
                 if profile.purchase_balance >= coin:
                     profile.purchase_balance -= coin
                     profile.profit *= coin

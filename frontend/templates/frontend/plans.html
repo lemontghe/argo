@@ -239,7 +239,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                     }else{
                                             var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Please before collecting purchase an amount of power</span>', {
                                               type: 'danger',
-                                        n      allow_dismiss: true,
+                                              allow_dismiss: true,
                                               animate: {
                                                 enter: 'animated fadeInRight',
                                                 exit: 'animated fadeOutRight'
@@ -418,16 +418,13 @@ timerId = setInterval(function(){
     $.ajax({
         url: '{% url "plans_page" %}',
         success: function(data) {
-            $('#SborHead').html($('#Sbor',data));
-            document.getElementById("SborHead").innerHTML = "Earn: "+document.getElementById("SborHead").innerHTML;
+            {% comment %} $('#SborHead').html($('#Sbor',data)); {% endcomment %}
+            {% comment %} document.getElementById("SborHead").innerHTML = "Earn: "+document.getElementById("SborHead").innerHTML; {% endcomment %}
             $('#relax').html($('#progressbar',data));
             $('#pbdiv').html($('#pb',data));
             document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML;
             $('#balancediv').html($('#balance',data));
             document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML;
-            {% for i in a %}
-                $('#sbordiv{{i}}').html($('#Sbor{{i}}',data));
-            {% endfor %}
             clearInterval(0);
         }
     });
