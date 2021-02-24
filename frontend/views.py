@@ -326,19 +326,20 @@ def plans(request, *args, **kwargs):
             plan = None
             profile.profit = 0
 
-        if f"inv" in request.POST and request.is_ajax:
-            coin = int(request.POST["coin"])
-            if profile.purchase_balance >= coin:
-                profile.purchase_balance -= coin
-                profile.profit *= coin
-                profile.investment_plans = a
-                profile.per_hour += coin*plan.per_hour
-                if profile.profit > profile.per_hour*24:
-                    profile.profit = profile.per_hour*24
-                profile.save()
-                return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "ph": profile.per_hour, "profit": profile.profit}), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+        if plan:
+            if f"inv" in request.POST and request.is_ajax:
+                coin = int(request.POST["coin"])
+                if profile.purchase_balance >= coin:
+                    profile.purchase_balance -= coin
+                    profile.profit *= coin
+                    profile.investment_plans = a
+                    profile.per_hour += coin*plan.per_hour
+                    if profile.profit > profile.per_hour*24:
+                        profile.profit = profile.per_hour*24
+                    profile.save()
+                    return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "ph": profile.per_hour, "profit": profile.profit}), content_type="application/json")
+                else:
+                    return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
     else: plan = None
 
