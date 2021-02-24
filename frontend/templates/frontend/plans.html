@@ -314,9 +314,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
-                                    alert(success);
                                     if (success){
-                                        alert("BuyPlan");
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{plan.id}}</span>', {
                                           type: 'success',
                                           allow_dismiss: true,
