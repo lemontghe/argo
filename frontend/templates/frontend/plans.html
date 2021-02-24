@@ -413,22 +413,22 @@ your plan, the greater your income. Proceeds will be distributed between
 {% endcompress %}
 
 
-<script type="text/javascript" language="javascript">
-timerId = setInterval(function(){
-    $.ajax({
-        url: '{% url "plans_page" %}',
-        success: function(data) {
+{% comment %} <script type="text/javascript" language="javascript"> {% endcomment %}
+{% comment %} timerId = setInterval(function(){ {% endcomment %}
+    {% comment %} $.ajax({ {% endcomment %}
+        {% comment %} url: '{% url "plans_page" %}', {% endcomment %}
+        {% comment %} success: function(data) { {% endcomment %}
             {% comment %} $('#SborHead').html($('#Sbor',data)); {% endcomment %}
             {% comment %} document.getElementById("SborHead").innerHTML = "Earn: "+document.getElementById("SborHead").innerHTML; {% endcomment %}
-            $('#relax').html($('#progressbar',data));
-            $('#pbdiv').html($('#pb',data));
-            document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML;
-            $('#balancediv').html($('#balance',data));
-            document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML;
-            clearInterval(0);
-        }
-    });
-}, 5000)
-</script>
+            {% comment %} $('#relax').html($('#progressbar',data)); {% endcomment %}
+            {% comment %} $('#pbdiv').html($('#pb',data)); {% endcomment %}
+            {% comment %} document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML; {% endcomment %}
+            {% comment %} $('#balancediv').html($('#balance',data)); {% endcomment %}
+            {% comment %} document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML; {% endcomment %}
+            {% comment %} clearInterval(0); {% endcomment %}
+        {% comment %} } {% endcomment %}
+    {% comment %} }); {% endcomment %}
+{% comment %} }, 5000) {% endcomment %}
+{% comment %} </script> {% endcomment %}
 
 </body></html>
