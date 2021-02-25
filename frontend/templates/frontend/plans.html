@@ -292,9 +292,7 @@ your plan, the greater your income. Proceeds will be distributed between
                             </div>
                             <div class="input-group input-group-alternative" style='top: 116px;'>
                               <div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-coins"></i></span> </div>
-                              {% comment %} <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required=""> {% endcomment %}
-                              {{site_balance_form.coin}}
-                              {{site_balance_form.coin.error}}
+                              <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required="">
                             </div>
                           </div>
                          {% csrf_token %}
