@@ -228,8 +228,6 @@ def viewads_add(request, *args, **kwargs):
                     addsurf_form.save()
                     profile.save()
                     b = save_asList(profile, profile.ads)
-                    print(profile.ads)
-                    print(b)
                     return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
@@ -289,8 +287,6 @@ def viewads_add(request, *args, **kwargs):
 
     b = save_asList(profile, profile.ads)
     profile.save()
-    print(profile.ads)
-    print(b)
     return render(request, 'frontend/viewads_add.html', {"profile": profile,
                                                          "addsurf_form": addsurf_form,
                                                          "editsite_form": editsite_form,
@@ -337,6 +333,7 @@ def plans(request, *args, **kwargs):
                     profile.purchase_balance -= coin
                     profile.investment_plans = a
                     profile.per_hour += coin*plan.per_hour
+                    profile.profit *= coin
                     if profile.profit > (profile.per_hour/plan.per_hour)*24:
                         profile.profit = (profile.per_hour/plan.per_hour)*24
                     profile.save()
