@@ -331,7 +331,6 @@ def plans(request, *args, **kwargs):
                 coin = int(request.POST["coin"])
                 if profile.purchase_balance >= coin:
                     profile.purchase_balance -= coin
-                    profile.profit *= coin
                     profile.investment_plans = a
                     profile.per_hour += coin*plan.per_hour
                     if profile.profit > (profile.per_hour/plan.per_hour)*24:
