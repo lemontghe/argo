@@ -325,7 +325,9 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
+                                    let coin = document.getElementById("coin_input").value;
                                     if (success){
+                                        if (coin > 0){
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{plan.id}}</span>', {
                                           type: 'success',
                                           allow_dismiss: true,
@@ -337,6 +339,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                         document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3);
                                         document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                         document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
+                                        }
                                     }else{
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You do not have enough funds in your Purchase Balance</span>', {
                                           type: 'danger',
