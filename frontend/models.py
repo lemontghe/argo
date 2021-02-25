@@ -14,7 +14,6 @@ class Profile(models.Model):
     per_hour = models.FloatField(default=0.00, max_length=7)
     profit = models.FloatField(default=0.00, max_length=7)
     alltime_earning = models.FloatField(default=0.00)
-    investment_plans = models.TextField(blank=True, null=True)
     all_deposits = models.FloatField(default=0.00, max_length=7)
     earned_click = models.FloatField(default=0.00, max_length=7)
     deposit = models.FloatField(default=0.00, max_length=7)
@@ -65,15 +64,10 @@ class AdsPlan(models.Model):
 
 
 class PlansPlan(models.Model):
-    price = models.IntegerField(default=0)
-    price_in_dollor = models.FloatField(default=0.00)
     per_hour = models.FloatField(default=0.00)
-    per_day = models.FloatField(default=0.00)
-    per_month = models.FloatField(default=0.00)
-    life_time = models.CharField(max_length=10, default="unlimited")
 
     def __str__(self):
-        return f"Plan {self.id}"
+        return f"Investment plan"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
