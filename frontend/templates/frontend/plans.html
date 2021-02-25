@@ -280,6 +280,10 @@ your plan, the greater your income. Proceeds will be distributed between
                 </div>
                   <div class="text-center">
                       <form action="{% url 'plans_page' %}" id="buyplanForm{{forloop.counter}}" method="post">
+                    {% csrf_token %}
+                    {% if error %}
+                    {{ error }}
+                    {% endif %}
                       <div class="col" style='max-width: 35%;"'>
                          {% csrf_token %}
                           <div class="form-group mt-2">
