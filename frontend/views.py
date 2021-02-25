@@ -319,9 +319,9 @@ def plans(request, *args, **kwargs):
         try:
             plan = PlansPlan.objects.get(id=1)
             if hour > 24:
-                profile.profit = 24*(plan.per_hour*profile.per_hour)
+                profile.profit = 24*(profile.per_hour/plan.per_hour)
             else:
-                profile.profit = hour*(plan.per_hour*profile.per_hour)
+                profile.profit = hour*(profile.per_hour/plan.per_hour)
         except:
             plan = None
             profile.profit = 0
@@ -344,13 +344,13 @@ def plans(request, *args, **kwargs):
     else: plan = None
 
 
-    if profile.profit > (plan.per_hour*profile.per_hour)*24:
-        profile.profit = (plan.per_hour*profile.per_hour)*24
+    if profile.profit > (profile.per_hour/plan.per_hour)*24:
+        profile.profit = (profile.per_hour/plan.per_hour)*24
         max_profit = 100
     elif profile.profit == 0:
         max_profit = 0
     else:
-        max_profit = int((profile.profit/((plan.per_hour*profile.per_hour)*24)*100))
+        max_profit = int((profile.profit/((profile.per_hour/plan.per_hour)*24)*100))
     profile.save()
 
     if "collect" in request.POST:
