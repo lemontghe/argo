@@ -292,7 +292,7 @@ your plan, the greater your income. Proceeds will be distributed between
                             </div>
                             <div class="input-group input-group-alternative" style='top: 116px;'>
                               <div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-coins"></i></span> </div>
-                              <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required="">
+                              <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required="" onchange onpropertychange onkeyuponpaste oninput="calctime()">
                             </div>
                           </div>
                          {% csrf_token %}
@@ -306,6 +306,13 @@ your plan, the greater your income. Proceeds will be distributed between
                        </div>
                     </form>
                   <script type="text/javascript">
+                       function calctime() { 
+                        let coin = document.getElementById("coin_input").value;
+                        document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        document.getElementById("per_day").innerHTML = parseFloat(24*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        document.getElementById("per_month").innerHTML = parseFloat(730.5*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        document.getElementById("per_year").innerHTML = parseFloat(8766*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        }
                       $(document).on("submit", "#buyplanForm{{forloop.counter}}", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
@@ -360,19 +367,19 @@ your plan, the greater your income. Proceeds will be distributed between
                     <div class="col-sm-3" style='left: 800px;top: -34px;'>
                       <div>
                         <label class="form-control-label">Per hour:</label>
-                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_hour">{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per day:</label>
-                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_day">{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per month:</label>
-                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_month">{{plan.per_hour|default:0}} coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per year:</label>
-                        <span class="float-right" >{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_year">{{plan.per_hour|default:0}} coin</span>
                       </div>
                     </div>
                   </div>
