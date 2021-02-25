@@ -333,9 +333,9 @@ def plans(request, *args, **kwargs):
                     profile.purchase_balance -= coin
                     profile.investment_plans = a
                     profile.per_hour += coin*plan.per_hour
-                    profile.profit *= coin
                     if profile.profit > (profile.per_hour/plan.per_hour)*24:
                         profile.profit = (profile.per_hour/plan.per_hour)*24
+                    profile.profit = profile.per_hour*hour
                     profile.save()
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "ph": profile.per_hour, "profit": profile.profit}), content_type="application/json")
                 else:
@@ -351,6 +351,7 @@ def plans(request, *args, **kwargs):
         max_profit = 0
     else:
         max_profit = int((profile.profit/((profile.per_hour/plan.per_hour)*24)*100))
+    profile.profit = profile.per_hour*hour
     profile.save()
 
     if "collect" in request.POST:
