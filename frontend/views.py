@@ -310,6 +310,13 @@ def plans(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     if profile.per_hour in ['per_hour', None]: profile.per_hour = 0
 
+    site_balance_form = SiteBalanceForm(request.POST, instance=request.user.profile)
+    if site_balance_form.is_valid():
+        if request.is_ajax():
+            coin = site_balance_form.cleaned_data.get('coin')
+    else:
+        site_balance_form = SiteBalanceForm(instance=request.user.profile)
+
     a = pytz.utc.localize(datetime.utcnow())
     b = a-profile.plan_created
     second = b.seconds
