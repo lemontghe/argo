@@ -284,21 +284,21 @@ your plan, the greater your income. Proceeds will be distributed between
                     {% if error %}
                     {{ error }}
                     {% endif %}
-                      <div class="col" style='max-width: 35%;"'>
+                      <div class="col">
                          {% csrf_token %}
                           <div class="form-group mt-2">
-                            <div class="col-8" style='max-width: 34.667%;top: 110px;'>
-                                <h3 class="mb-0 text-dark" style='margin-bottom: 10px !important; margin-top: 10px;'>Buy Power/Hour</h3>
+                            <div class="col-2">
+                                <h3 class="mb-3 text-dark">Buy Power/Hour</h3>
                             </div>
-                            <div class="input-group input-group-alternative" style='top: 116px;'>
+                            <div class="input-group input-group-alternative">
                               <div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-coins"></i></span> </div>
                               <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required="" onchange onpropertychange onkeyuponpaste oninput="calctime()">
                             </div>
                           </div>
                          {% csrf_token %}
-                          <div class="text-center">
+                          <div class="text-right">
                                 {% csrf_token %}
-                                <button class="btn fas fa-shopping-cart btn-3 btn-primary" style='margin-left: 540px;margin-top: -118px;top: 116px;' type="submit">
+                                <button class="btn fas fa-shopping-cart btn-3 btn-primary">
                                 <span class="btn-inner--icon"><i class="tim-icons icon-bag-17"></i></span>
                                 <span class="btn-inner--text">Buy</span>
                               </button>
@@ -367,7 +367,7 @@ your plan, the greater your income. Proceeds will be distributed between
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-3" style='left: 800px;top: -34px;'>
+                    <div class="col-sm-3">
                       <div>
                         <label class="form-control-label">Per hour:</label>
                         <span class="float-right" id="per_hour">0 coin</span>
