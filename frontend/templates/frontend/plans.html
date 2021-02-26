@@ -337,6 +337,7 @@ your plan, the greater your income. Proceeds will be distributed between
                                           }
                                         });
                                         document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
+                                        {% comment %} document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3); {% endcomment %}
                                         document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
                                         }
                                     }else{
