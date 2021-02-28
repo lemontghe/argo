@@ -319,9 +319,9 @@ def plans(request, *args, **kwargs):
         try:
             plan = PlansPlan.objects.get(id=1)
             if hour > 24:
-                profile.profit = 24*(plan.per_hour*profile.per_hour)
+                profile.profit = 24*(profile.per_hour/plan.per_hour)
             else:
-                profile.profit = hour*(plan.per_hour*profile.per_hour)
+                profile.profit = hour*(profile.per_hour/plan.per_hour)
         except:
             plan = None
             profile.profit = 0
@@ -331,11 +331,11 @@ def plans(request, *args, **kwargs):
                 coin = int(request.POST["coin"])
                 if profile.purchase_balance >= coin:
                     profile.purchase_balance -= coin
-                    profile.profit *= coin
                     profile.investment_plans = a
                     profile.per_hour += coin*plan.per_hour
-                    if profile.profit > profile.per_hour*24:
-                        profile.profit = profile.per_hour*24
+                    if profile.profit > (profile.per_hour/plan.per_hour)*24:
+                        profile.profit = (profile.per_hour/plan.per_hour)*24
+                    profile.profit = profile.per_hour*hour
                     profile.save()
                     return HttpResponse(json.dumps({"success": True, "pb": profile.purchase_balance, "ph": profile.per_hour, "profit": profile.profit}), content_type="application/json")
                 else:
@@ -344,13 +344,14 @@ def plans(request, *args, **kwargs):
     else: plan = None
 
 
-    if profile.profit > profile.per_hour*24:
-        profile.profit = profile.per_hour*24
+    if profile.profit > (profile.per_hour/plan.per_hour)*24:
+        profile.profit = (profile.per_hour/plan.per_hour)*24
         max_profit = 100
     elif profile.profit == 0:
         max_profit = 0
     else:
-        max_profit = int((profile.profit/(profile.per_hour*24)*100))
+        max_profit = int((profile.profit/((profile.per_hour/plan.per_hour)*24)*100))
+    profile.profit = profile.per_hour*hour
     profile.save()
 
     if "collect" in request.POST:

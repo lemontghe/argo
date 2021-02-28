@@ -184,11 +184,6 @@ your plan, the greater your income. Proceeds will be distributed between
                         </button>
                       </form>
                   <script type="text/javascript">
-                        var m = 0;
-                        var collect = false;
-                        window.setInterval(function(){
-                            m += 1;
-                        }, 1000);
                       $(document).on("submit", "#collectForm", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
@@ -203,38 +198,23 @@ your plan, the greater your income. Proceeds will be distributed between
                                     var success = response["success"]
                                     if ({{profile.per_hour}}){
                                         if(success){
-                                            if (m>=60){
-                                                collect = false;
-                                                m = 0;
+                                            collect = true;
+                                            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You have successfully collected</span>', {
+                                              type: 'success',
+                                              allow_dismiss: true,
+                                              animate: {
+                                                enter: 'animated fadeInRight',
+                                                exit: 'animated fadeOutRight'
+                                              }
+                                            });
+                                            document.getElementById("Sbor").innerHTML = ' '+response.profit;
+                                            if(response.profit==0){
+                                                document.getElementById("Sbor").innerHTML += ".000";
                                             }
-                                            if(collect){
-                                                var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Collect no more than 1 time in 10 minutes.</span>', {
-                                                  type: 'danger',
-                                                  allow_dismiss: true,
-                                                  animate: {
-                                                    enter: 'animated fadeInRight',
-                                                    exit: 'animated fadeOutRight'
-                                                  }
-                                                });
-                                            }else{
-                                                collect = true;
-                                                var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You have successfully collected</span>', {
-                                                  type: 'success',
-                                                  allow_dismiss: true,
-                                                  animate: {
-                                                    enter: 'animated fadeInRight',
-                                                    exit: 'animated fadeOutRight'
-                                                  }
-                                                });
-                                                document.getElementById("Sbor").innerHTML = ' '+response.profit;
-                                                if(response.profit==0){
-                                                    document.getElementById("Sbor").innerHTML += ".000";
-                                                }
-                                                document.getElementById("progressbar").style = "width: 0";
-                                                document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
-                                                document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-                                                document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
-                                            }
+                                            document.getElementById("progressbar").style = "width: 0";
+                                            document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
+                                            document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
+                                            document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                         }
                                     }else{
                                             var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Please before collecting purchase an amount of power</span>', {
@@ -284,21 +264,21 @@ your plan, the greater your income. Proceeds will be distributed between
                     {% if error %}
                     {{ error }}
                     {% endif %}
-                      <div class="col" style='max-width: 35%;"'>
+                      <div class="col">
                          {% csrf_token %}
-                          <div class="form-group mt-2">
-                            <div class="col-8" style='max-width: 34.667%;top: 110px;'>
-                                <h3 class="mb-0 text-dark" style='margin-bottom: 10px !important; margin-top: 10px;'>Buy Power/Hour</h3>
+                          <div class="form-group mt-6">
+                            <div class="col-2">
+                                <h3 class="mb-3 text-dark text-left">Buy Power/Hour</h3>
                             </div>
-                            <div class="input-group input-group-alternative" style='top: 116px;'>
+                            <div class="input-group input-group-alternative" style='width: 38%;'>
                               <div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-coins"></i></span> </div>
                               <input type="number" name="coin" placeholder="Enter the amount of coins.." class="form-control form-control-alternative" step="any" autocomplete="off" id="coin_input" min="0" maxlength="7" required="" onchange onpropertychange onkeyuponpaste oninput="calctime()">
                             </div>
                           </div>
                          {% csrf_token %}
-                          <div class="text-center">
+                          <div >
                                 {% csrf_token %}
-                                <button class="btn fas fa-shopping-cart btn-3 btn-primary" style='margin-left: 540px;margin-top: -118px;top: 116px;' type="submit">
+                                <button id="resbtn" class="btn fas fa-shopping-cart btn-3 btn-primary" style='padding: 0.625rem 2.25rem;bottom: 4.3rem;right: 3rem;'>
                                 <span class="btn-inner--icon"><i class="tim-icons icon-bag-17"></i></span>
                                 <span class="btn-inner--text">Buy</span>
                               </button>
@@ -306,6 +286,23 @@ your plan, the greater your income. Proceeds will be distributed between
                        </div>
                     </form>
                   <script type="text/javascript">
+                      function adjustStyle(width) {
+                      width = parseInt(width);
+                      if (width < 701) {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText+";right: 3rem;";
+                      } else if (width < 900) {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText+";left: 3rem;";
+                      } else {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText;
+                      }
+                    }
+                    $(function() {
+                      adjustStyle($(this).width());
+                      $(window).resize(function() {
+                        adjustStyle($(this).width());
+                      });
+                    });
+
                        function calctime() { 
                         let coin = document.getElementById("coin_input").value;
                         document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(3);
@@ -325,7 +322,9 @@ your plan, the greater your income. Proceeds will be distributed between
                                 header: {"X-CSRFToken": '{% csrf_token %}'},
                                 success: function(response){
                                     var success = response["success"]
+                                    let coin = document.getElementById("coin_input").value;
                                     if (success){
+                                        if (coin > 0){
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">|  You have Purchased Plan {{plan.id}}</span>', {
                                           type: 'success',
                                           allow_dismiss: true,
@@ -334,9 +333,9 @@ your plan, the greater your income. Proceeds will be distributed between
                                             exit: 'animated fadeOutRight'
                                           }
                                         });
-                                        document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3);
                                         document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                         document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
+                                        }
                                     }else{
                                         var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You do not have enough funds in your Purchase Balance</span>', {
                                           type: 'danger',
@@ -364,22 +363,22 @@ your plan, the greater your income. Proceeds will be distributed between
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-3" style='left: 800px;top: -34px;'>
+                    <div class="col-md-12">
                       <div>
                         <label class="form-control-label">Per hour:</label>
-                        <span class="float-right" id="per_hour">{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_hour">0 coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per day:</label>
-                        <span class="float-right" id="per_day">{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_day">0 coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per month:</label>
-                        <span class="float-right" id="per_month">{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_month">0 coin</span>
                       </div>
                       <div>
                         <label class="form-control-label">Per year:</label>
-                        <span class="float-right" id="per_year">{{plan.per_hour|default:0}} coin</span>
+                        <span class="float-right" id="per_year">0 coin</span>
                       </div>
                     </div>
                   </div>
@@ -424,22 +423,22 @@ your plan, the greater your income. Proceeds will be distributed between
 {% endcompress %}
 
 
-{% comment %} <script type="text/javascript" language="javascript"> {% endcomment %}
-{% comment %} timerId = setInterval(function(){ {% endcomment %}
-    {% comment %} $.ajax({ {% endcomment %}
-        {% comment %} url: '{% url "plans_page" %}', {% endcomment %}
-        {% comment %} success: function(data) { {% endcomment %}
-            {% comment %} $('#SborHead').html($('#Sbor',data)); {% endcomment %}
-            {% comment %} document.getElementById("SborHead").innerHTML = "Earn: "+document.getElementById("SborHead").innerHTML; {% endcomment %}
-            {% comment %} $('#relax').html($('#progressbar',data)); {% endcomment %}
-            {% comment %} $('#pbdiv').html($('#pb',data)); {% endcomment %}
-            {% comment %} document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML; {% endcomment %}
-            {% comment %} $('#balancediv').html($('#balance',data)); {% endcomment %}
-            {% comment %} document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML; {% endcomment %}
-            {% comment %} clearInterval(0); {% endcomment %}
-        {% comment %} } {% endcomment %}
-    {% comment %} }); {% endcomment %}
-{% comment %} }, 5000) {% endcomment %}
-{% comment %} </script> {% endcomment %}
+<script type="text/javascript" language="javascript">
+timerId = setInterval(function(){
+    $.ajax({
+        url: '{% url "plans_page" %}',
+        success: function(data) {
+            $('#SborHead').html($('#Sbor',data));
+            document.getElementById("SborHead").innerHTML = "Earn: "+document.getElementById("SborHead").innerHTML;
+            $('#relax').html($('#progressbar',data));
+            $('#pbdiv').html($('#pb',data));
+            document.getElementById("pbdiv").innerHTML = '<h3><i class="fas fa-shopping-cart"></i> Purchase balance</h3>'+document.getElementById("pbdiv").innerHTML;
+            $('#balancediv').html($('#balance',data));
+            document.getElementById("balancediv").innerHTML = '<h3><i class="fas fa-wallet"></i> Balance</h3>'+document.getElementById("balancediv").innerHTML;
+            clearInterval(0);
+        }
+    });
+}, 5000)
+</script>
 
 </body></html>

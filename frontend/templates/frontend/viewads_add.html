@@ -238,6 +238,7 @@
                                                 e.preventDefault();
                                                 document.getElementById("addsite-btn{{forloop.counter}}").disabled = true;
                                                 var form = $(this).serializeArray();
+                                                form.push({name: "{{plan.id}}"});
                                                 $.ajax({
                                                     url: '{% url "viewads_add_page" %}',
                                                     type: "POST",
