@@ -184,11 +184,6 @@ your plan, the greater your income. Proceeds will be distributed between
                         </button>
                       </form>
                   <script type="text/javascript">
-                        var m = 0;
-                        var collect = false;
-                        window.setInterval(function(){
-                            m += 1;
-                        }, 1000);
                       $(document).on("submit", "#collectForm", function(e){
                             e.preventDefault();
                             var form = $(this).serializeArray();
@@ -203,38 +198,23 @@ your plan, the greater your income. Proceeds will be distributed between
                                     var success = response["success"]
                                     if ({{profile.per_hour}}){
                                         if(success){
-                                            if (m>=60){
-                                                collect = false;
-                                                m = 0;
+                                            collect = true;
+                                            var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You have successfully collected</span>', {
+                                              type: 'success',
+                                              allow_dismiss: true,
+                                              animate: {
+                                                enter: 'animated fadeInRight',
+                                                exit: 'animated fadeOutRight'
+                                              }
+                                            });
+                                            document.getElementById("Sbor").innerHTML = ' '+response.profit;
+                                            if(response.profit==0){
+                                                document.getElementById("Sbor").innerHTML += ".000";
                                             }
-                                            if(collect){
-                                                var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Collect no more than 1 time in 10 minutes.</span>', {
-                                                  type: 'danger',
-                                                  allow_dismiss: true,
-                                                  animate: {
-                                                    enter: 'animated fadeInRight',
-                                                    exit: 'animated fadeOutRight'
-                                                  }
-                                                });
-                                            }else{
-                                                collect = true;
-                                                var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| You have successfully collected</span>', {
-                                                  type: 'success',
-                                                  allow_dismiss: true,
-                                                  animate: {
-                                                    enter: 'animated fadeInRight',
-                                                    exit: 'animated fadeOutRight'
-                                                  }
-                                                });
-                                                document.getElementById("Sbor").innerHTML = ' '+response.profit;
-                                                if(response.profit==0){
-                                                    document.getElementById("Sbor").innerHTML += ".000";
-                                                }
-                                                document.getElementById("progressbar").style = "width: 0";
-                                                document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
-                                                document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
-                                                document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
-                                            }
+                                            document.getElementById("progressbar").style = "width: 0";
+                                            document.getElementById("progressbar").setAttribute("aria-valuenow", "25");
+                                            document.getElementById("progressbar").setAttribute("class", "progress-bar bg-success");
+                                            document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
                                         }
                                     }else{
                                             var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Error </strong><span data-notify="message">| Please before collecting purchase an amount of power</span>', {
