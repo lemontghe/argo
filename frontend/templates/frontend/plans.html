@@ -298,7 +298,7 @@ your plan, the greater your income. Proceeds will be distributed between
                          {% csrf_token %}
                           <div >
                                 {% csrf_token %}
-                                <button class="btn fas fa-shopping-cart btn-3 btn-primary" style='padding: 0.625rem 2.25rem;bottom: 4.3rem;left: 1rem;'>
+                                <button id="resbtn" class="btn fas fa-shopping-cart btn-3 btn-primary" style='padding: 0.625rem 2.25rem;bottom: 4.3rem;right: 3rem;'>
                                 <span class="btn-inner--icon"><i class="tim-icons icon-bag-17"></i></span>
                                 <span class="btn-inner--text">Buy</span>
                               </button>
@@ -306,6 +306,23 @@ your plan, the greater your income. Proceeds will be distributed between
                        </div>
                     </form>
                   <script type="text/javascript">
+                      function adjustStyle(width) {
+                      width = parseInt(width);
+                      if (width < 701) {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText+";right: 3rem;";
+                      } else if (width < 900) {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText+";left: 3rem;";
+                      } else {
+                        document.getElementById("resbtn").style.cssText = document.getElementById("resbtn").style.cssText;
+                      }
+                    }
+                    $(function() {
+                      adjustStyle($(this).width());
+                      $(window).resize(function() {
+                        adjustStyle($(this).width());
+                      });
+                    });
+
                        function calctime() { 
                         let coin = document.getElementById("coin_input").value;
                         document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(3);
@@ -337,7 +354,6 @@ your plan, the greater your income. Proceeds will be distributed between
                                           }
                                         });
                                         document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
-                                        {% comment %} document.getElementById("Sbor").innerHTML = ' '+parseFloat(response.profit).toFixed(3); {% endcomment %}
                                         document.getElementById("profit").innerHTML = 'Current profit: <i class="fas fa-coins"></i> '+parseFloat(response.ph).toFixed(2)+'/Hour';
                                         }
                                     }else{
@@ -367,7 +383,7 @@ your plan, the greater your income. Proceeds will be distributed between
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-md-12">
                       <div>
                         <label class="form-control-label">Per hour:</label>
                         <span class="float-right" id="per_hour">0 coin</span>
