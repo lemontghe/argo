@@ -351,26 +351,29 @@ def plans(request, *args, **kwargs):
         profile.profit = profile.per_hour*hour
         profile.save()
 
+        if "collect" in request.POST:
+            if request.is_ajax:
+                profile.balance += profile.profit/2
+                profile.purchase_balance += profile.profit/2
+                profile.profit = 0
+                profile.plan_created = pytz.utc.localize(datetime.utcnow())
+                profile.save()
+                return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0, "pb": profile.purchase_balance}), content_type="application/json")
+            else:
+                return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
-    else: plan = None
-
-
-    if "collect" in request.POST:
-        if request.is_ajax:
-            profile.balance += profile.profit/2
-            profile.purchase_balance += profile.profit/2
-            profile.profit = 0
-            profile.plan_created = pytz.utc.localize(datetime.utcnow())
-            profile.save()
-            return HttpResponse(json.dumps({"success": True, "profit": profile.profit, "max_profit": 0, "pb": profile.purchase_balance}), content_type="application/json")
-        else:
-            return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-
+        return render(request, 'frontend/plans.html', {"profile": profile,
+                                                       "plan": plan,
+                                                       "per_hour": profile.per_hour,
+                                                       "max_profit": max_profit,
+                                                       })
     return render(request, 'frontend/plans.html', {"profile": profile,
-                                                   "plan": plan,
+                                                   "plan": None,
                                                    "per_hour": profile.per_hour,
-                                                   "max_profit": max_profit,
+                                                   "max_profit": None,
                                                    })
+
+
 
 
 @login_required(login_url='login_page')
