@@ -344,7 +344,7 @@ def plans(request, *args, **kwargs):
     else: plan = None
 
 
-    if profile.profit > int((profile.per_hour/plan.per_hour)*24):
+    if profile.profit > (profile.per_hour/plan.per_hour)*24:
         profile.profit = (profile.per_hour/plan.per_hour)*24
         max_profit = 100
     elif profile.profit == 0:
