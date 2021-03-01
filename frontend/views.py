@@ -308,6 +308,7 @@ def payment(request, *args, **kwargs):
 def plans(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
+    print("-"*20)
     print(profile)
     if profile.per_hour in ['per_hour', None]: profile.per_hour = 0
     print(profile.per_hour)
@@ -346,6 +347,9 @@ def plans(request, *args, **kwargs):
     else: plan = None
 
 
+    print("-"*20)
+    print(profile.profit)
+    print(profile.per_hour)
     if profile.profit > (profile.per_hour/plan.per_hour)*24:
         profile.profit = (profile.per_hour/plan.per_hour)*24
         max_profit = 100
