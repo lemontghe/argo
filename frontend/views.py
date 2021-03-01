@@ -341,18 +341,19 @@ def plans(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
 
+        if profile.profit > (profile.per_hour/plan.per_hour)*24:
+            profile.profit = (profile.per_hour/plan.per_hour)*24
+            max_profit = 100
+        elif profile.profit == 0:
+            max_profit = 0
+        else:
+            max_profit = int((profile.profit/((profile.per_hour/plan.per_hour)*24)*100))
+        profile.profit = profile.per_hour*hour
+        profile.save()
+
+
     else: plan = None
 
-
-    if profile.profit > (profile.per_hour/plan.per_hour)*24:
-        profile.profit = (profile.per_hour/plan.per_hour)*24
-        max_profit = 100
-    elif profile.profit == 0:
-        max_profit = 0
-    else:
-        max_profit = int((profile.profit/((profile.per_hour/plan.per_hour)*24)*100))
-    profile.profit = profile.per_hour*hour
-    profile.save()
 
     if "collect" in request.POST:
         if request.is_ajax:
