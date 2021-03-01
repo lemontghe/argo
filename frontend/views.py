@@ -308,9 +308,9 @@ def payment(request, *args, **kwargs):
 def plans(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
-    if profile is None:
-        return render(request, 'frontend/plans.html')
     if profile.per_hour in ['per_hour', None]: profile.per_hour = 0
+    if profile.per_Hour == None:
+        return render(request, 'frontend/plans.html',)
 
     a = pytz.utc.localize(datetime.utcnow())
     b = a-profile.plan_created
