@@ -307,8 +307,8 @@ your plan, the greater your income. Proceeds will be distributed between
                         let coin = document.getElementById("coin_input").value;
                         document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(3);
                         document.getElementById("per_day").innerHTML = parseFloat(24*coin*{{plan.per_hour|default:0}}).toFixed(3);
-                        document.getElementById("per_month").innerHTML = parseFloat(730.5*coin*{{plan.per_hour|default:0}}).toFixed(3);
-                        document.getElementById("per_year").innerHTML = parseFloat(8766*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        document.getElementById("per_month").innerHTML = parseFloat(730.485*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        document.getElementById("per_year").innerHTML = parseFloat(8765.82*coin*{{plan.per_hour|default:0}}).toFixed(3);
                         }
                       $(document).on("submit", "#buyplanForm{{forloop.counter}}", function(e){
                             e.preventDefault();
