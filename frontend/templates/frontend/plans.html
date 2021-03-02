@@ -306,9 +306,10 @@ your plan, the greater your income. Proceeds will be distributed between
                        function calctime() { 
                         let coin = document.getElementById("coin_input").value;
                         let x = {{plan.per_hour|default:0}};
-                        if (String(x).indexOf('.')){
+                        try {
                             x = String(x).split('.')[1].length;
-                        }else{
+                        }
+                        catch (e) {
                             x = 1;
                         }
                         document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(x);
