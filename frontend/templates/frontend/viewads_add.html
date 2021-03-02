@@ -337,14 +337,14 @@
                             <hr class="my-2">
                             <div class="row text-center">
                               <div class="col-4">
-                                <h3 class="mb-0 text-warning"><span class="fa fa-eye"></span> Viewed: 9 click.</h3>
+                                  <h3 class="mb-0 text-warning"><span class="fa fa-eye"></span> Viewed: {{ad.5}} click.</h3>
                               </div>
 
                               <div id="card-plan" class="col-4">
                                   <h3 class="mb-0 text-danger"><span class="far fa-gem"></span> Ads: {{ ad.0 }}</h3>
                               </div>
                               <div class="col-4">
-                                <h3 class="mb-0 text-info"><span class="fas fa-mouse-pointer"></span> Left views: -2</h3>
+                                  <h3 class="mb-0 text-info"><span class="fas fa-mouse-pointer"></span> Left views: {{ad.6}}</h3>
                               </div>
                             </div>
                             <hr class="my-2">
@@ -437,15 +437,15 @@
                               </div>
 
                                   
-                                    {% if ad.6 == "Started" %}
+                                    {% if ad.8 == "Started" %}
                                 <h3 class="mb-0 float-right">
                                   <span> <i class="far fa-bell"> </i> Status: </span>
-                                  <span class="text-success"> {{ad.6}} </span>
+                                  <span class="text-success"> {{ad.8}} </span>
                                                                   </h3>
                                     {% else %}
                                 <h3 class="mb-0 float-right">
                                   <span> <i class="far fa-bell"> </i> Status: </span>
-                                  <span class="text-danger"> {{ad.6}}</span>
+                                  <span class="text-danger"> {{ad.8}}</span>
                                                                   </h3>
                                     {% endif %}
                               </div>
@@ -459,7 +459,7 @@
                             {% if error %}
                             {{ error }}
                             {% endif %}
-                              {% if ad.6 == "Started" %}
+                              {% if ad.8 == "Started" %}
                               <div class="col-4">
                                   <button id="stop-btn{{forloop.counter}}"  type="submit" class="btn btn-secondary btn-sm general-btn{{forloop.counter}}">Stop showing</button>
                               </div>

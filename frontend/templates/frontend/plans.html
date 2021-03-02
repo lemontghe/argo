@@ -305,10 +305,16 @@ your plan, the greater your income. Proceeds will be distributed between
 
                        function calctime() { 
                         let coin = document.getElementById("coin_input").value;
-                        document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(3);
-                        document.getElementById("per_day").innerHTML = parseFloat(24*coin*{{plan.per_hour|default:0}}).toFixed(3);
-                        document.getElementById("per_month").innerHTML = parseFloat(730.485*coin*{{plan.per_hour|default:0}}).toFixed(3);
-                        document.getElementById("per_year").innerHTML = parseFloat(8765.82*coin*{{plan.per_hour|default:0}}).toFixed(3);
+                        let x = {{plan.per_hour|default:0}};
+                        if (String(x).indexOf('.')){
+                            x = String(x).split('.')[1].length;
+                        }else{
+                            x = 1;
+                        }
+                        document.getElementById("per_hour").innerHTML = parseFloat(coin*{{plan.per_hour|default:0}}).toFixed(x);
+                        document.getElementById("per_day").innerHTML = parseFloat(24*coin*{{plan.per_hour|default:0}}).toFixed(x);
+                        document.getElementById("per_month").innerHTML = parseFloat(730.485*coin*{{plan.per_hour|default:0}}).toFixed(x);
+                        document.getElementById("per_year").innerHTML = parseFloat(8765.82*coin*{{plan.per_hour|default:0}}).toFixed(x);
                         }
                       $(document).on("submit", "#buyplanForm{{forloop.counter}}", function(e){
                             e.preventDefault();

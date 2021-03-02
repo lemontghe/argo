@@ -224,7 +224,7 @@ def viewads_add(request, *args, **kwargs):
                     ad = Ad.objects.create(left_views=0, site_balance=0, viewed=0)
                     profile.url = addsurf_form.cleaned_data.get('url')
                     profile.title = addsurf_form.cleaned_data.get('title')
-                    profile.ads += f"{no_plan}ው{profile.url}ው{profile.title}ው{ad.site_balance}ው{ad.id}ው{ad.viewed}ውStarted"
+                    profile.ads += f"{no_plan}ው{profile.url}ው{profile.title}ው{ad.site_balance}ው{ad.id}ው{ad.viewed}ው{ad.left_views}ው{AdsPlan.objects.get(name=no_plan).time}ውStarted"
                     addsurf_form.save()
                     profile.save()
                     b = save_asList(profile, profile.ads)
