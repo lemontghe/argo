@@ -169,7 +169,7 @@ def viewads(request, *args, **kwargs):
         a = []
         adss = save_asList(p, p.ads)
         for ad in adss:
-            if int(ad[3]) > 1:
+            if int(ad[3]) > 0 and "Started" in ad[8]:
                 a.append(ad)
         ads.append(a)
     return render(request, 'frontend/viewads.html', {"profile": profile, "ads": ads})
@@ -186,8 +186,6 @@ def viewads_add(request, *args, **kwargs):
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
-    profile.purchase_balance = 1200000
-    profile.save()
 
     ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
     for i in range(plans_count):
@@ -207,6 +205,10 @@ def viewads_add(request, *args, **kwargs):
             if request.is_ajax():
                 no_ad = int(list(request.POST)[-1])-1
                 coin = site_balance_form.cleaned_data.get('coin')
+                ad = AdsPlan.objects.get(id=no_ad+1)
+                ad.left_views = profile.per_hour
+                b[no_ad][6] = str(ad.left_views)
+                ad.save()
                 if '+' in coin: coin.replace('+', '')
                 if int(coin) <= profile.purchase_balance:
                     b[no_ad][3] = str(int(b[no_ad][3])+int(coin))
@@ -215,9 +217,7 @@ def viewads_add(request, *args, **kwargs):
                     profile.save()
                     return HttpResponse(json.dumps({"success": True, "sb": b[no_ad][3], "pb": profile.purchase_balance}), content_type="application/json")
                 else:
-                    return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+                    return HttpResponse(json.dumps({"success": False, "sb": b[no_ad][3], "pb": profile.purchase_balance}), content_type="application/json")
         if "no_plan" not in request.POST:
             if addsurf_form.is_valid():
                 if request.is_ajax():

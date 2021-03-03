@@ -53,8 +53,7 @@ class Ad(models.Model):
 class AdsPlan(models.Model):
     name = models.CharField(max_length=25, null=True, unique=True)
     time = models.CharField(max_length=10, null=True)
-    price_per_1 = models.IntegerField(default=0)
-    price_per_1000 = models.IntegerField(default=0)
+    price_per_each = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.name}"
