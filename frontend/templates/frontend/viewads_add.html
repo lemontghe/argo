@@ -149,7 +149,7 @@
       <div class="container-fluid mt--2">
         <div class="row">
 
-            {% for plan in plans %}
+            {% for plan, per_1000 in plans %}
             <div class="col-xl-4 col-lg-6 mt-4">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card bg-secondary shadow">
@@ -173,7 +173,7 @@
                             <span class="float-right">{{plan.price_per_1}}</span></div>
                           <div>
                             <label class="form-control-label"><i class="fas fa-coins"></i> Price per 1000 views:</label>
-                            <span class="float-right">{{plan.price_per_1000}}</span></div>
+                            <span class="float-right">{{per_1000}}</span></div>
                         </div>
                       </div>
                     </div>
@@ -344,7 +344,7 @@
                                   <h3 class="mb-0 text-danger"><span class="far fa-gem"></span> Ads: {{ ad.0 }}</h3>
                               </div>
                               <div class="col-4">
-                                  <h3 class="mb-0 text-info"><span class="fas fa-mouse-pointer"></span> Left views: {{ad.6}}</h3>
+                                  <h3 class="mb-0 text-info" id="lv{{forloop.counter}}"><span class="fas fa-mouse-pointer"></span> Left views: {{ad.6}}</h3>
                               </div>
                             </div>
                             <hr class="my-2">
@@ -393,6 +393,7 @@
                                                                 var value = document.forms["coin_form{{forloop.counter}}"]["coin"].value;
                                                                 document.getElementById("coin_span{{forloop.counter}}").innerHTML = " "+response.sb;
                                                                 document.getElementById("pb").innerHTML = " <i class='fas fa-coins'></i>  "+parseFloat(response.pb).toFixed(2);
+                                                                document.getElementById("lv{{forloop.counter}}").innerHTML = '<span class="fas fa-mouse-pointer"></span> Left views: '+response.lv;
                                                                 var notify = $.notify('<span data-notify="icon" class="fa fa-bell"></span> <strong>Successfully  </strong><span data-notify="message">| Balance add successful</span>', {
                                                                   type: 'success',
                                                                   allow_dismiss: true,

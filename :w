@@ -206,7 +206,7 @@ def viewads_add(request, *args, **kwargs):
             if request.is_ajax():
                 no_ad = int(list(request.POST)[-1])-1
                 coin = site_balance_form.cleaned_data.get('coin')
-                ad = ads[no_ad]
+                ad = ads[no_ad+1]
                 plan = PlansPlan.objects.get(id=1)
                 if '+' in coin: coin.replace('+', '')
                 if int(coin) <= profile.purchase_balance:
@@ -214,7 +214,8 @@ def viewads_add(request, *args, **kwargs):
                     save_ads(profile, b)
                     profile.purchase_balance -= int(coin)
                     profile.save()
-                    ad.left_views = int(b[no_ad][3])//AdsPlan.objects.get(name=b[no_ad][0]).price_per_1
+                    per_1 = ad.site_balance//ad.left_views if ad.site_balance and ad.left_views else 0
+                    ad.left_views = int(b[no_ad][3])//per_1 if b[no_ad][3] else 0
                     b[no_ad][6] = str(ad.left_views)
                     ad.save()
                     save_ads(profile, b)
