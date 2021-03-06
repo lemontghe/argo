@@ -170,6 +170,10 @@ def viewads(request, *args, **kwargs):
         adss = save_asList(p, p.ads)
         for ad in adss:
             if int(ad[6]) > 0 and "Started" == ad[8]:
+                if PlansPlan.objects.get(id=1).fee == "fee":
+                    ad[-1] = AdsPlan.objects.get(name=ad[0]).price_per_1
+                else:
+                    ad[-1] = AdsPlan.objects.get(name=ad[0]).price_per_1-PlansPlan.objects.get(id=1).fee
                 a.append(ad)
         ads.append(a)
     return render(request, 'frontend/viewads.html', {"profile": profile, "ads": ads})
@@ -331,7 +335,7 @@ def plans(request, *args, **kwargs):
 
         if plan:
             if f"inv" in request.POST and request.is_ajax:
-                coin = int(request.POST["coin"])
+                coin = float(request.POST["coin"])
                 if profile.purchase_balance >= coin:
                     profile.purchase_balance -= coin
                     profile.investment_plans = a
