@@ -438,6 +438,7 @@ def account(request, *args, **kwargs):
 def error_404(request, *args, **argv):
     return render(request, 'frontend/404.html', {}, status=404)
 
+
 @require_GET
 def robots_txt(request):
     lines = [
