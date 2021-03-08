@@ -167,8 +167,8 @@ html {
                         {% if error %}
                         {{ error }}
                         {% endif %}
-                        <button onClick="return onurl({{forloop.parentloop.counter}}, {{forloop.counter}})" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
-                            <a herf="javascript:void(0)" title="Start browsing the site">  {{a.2}}</a>
+                        <button onclick="onurl({{forloop.parentloop.counter}}, {{forloop.counter}});return false;" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
+                            <a title="Start browsing the site">  {{a.2}}</a>
                           </button>
                         </h3>
                       </div>
@@ -182,7 +182,7 @@ html {
                             <span class="text-default far fa-clock"></span>
                             <span class="text-default"> {{a.7}}s</span>
                         </div>
-                        <div id="counter{{forloop.counter}}" style="margin: -1.5rem;font-size: 37px;margin-top: -1rem;" >0</div>
+                        <div id="counter{{forloop.parentloop.counter}}{{forloop.counter}}" style="margin: -1.5rem;font-size: 37px;margin-top: -1rem;" >0</div>
                         <div class="col-5 text-right text-muted">
                             <span class="fas fa-mouse-pointer" > Left views: </span>
                             <span style="margin-right: -1rem;"> {{a.6}}</span>
@@ -193,29 +193,51 @@ html {
               </div>
             </div>
             <script>
-                 {% comment %} var count = 0; {% endcomment %}
-                 {% comment %} var myInterval; {% endcomment %}
+                 var count = 0;
+                 var myInterval;
+                 var w = 0;
                  {% comment %} window.addEventListener('focus', startTimer); {% endcomment %}
                  {% comment %} window.addEventListener('blur', stopTimer); {% endcomment %}
-                 {% comment %} function timerHandler() { {% endcomment %}
-                  {% comment %} count++; {% endcomment %}
-                  {% comment %} document.getElementById("counter"+k).innerHTML = count; {% endcomment %}
-                 {% comment %} } {% endcomment %}
-                 {% comment %} function startTimer() { {% endcomment %}
-                  {% comment %} console.log('focus'); {% endcomment %}
-                  {% comment %} myInterval = window.setInterval(timerHandler, 1000); {% endcomment %}
-                 {% comment %} } {% endcomment %}
-                 {% comment %} function stopTimer() { {% endcomment %}
-                  {% comment %} window.clearInterval(myInterval); {% endcomment %}
-                 {% comment %} } {% endcomment %}
+                 function timerHandler(k, i) {
+                    if(count < 99){
+                        count++;
+                        document.getElementById("counter"+k+i).innerHTML = count;
+                    }else{
+                        window.clearInterval(myInterval);
+                    }
+                 }
                 function onurl(k, i){
-                  window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()), 'View Ads');
-                    {% comment %} alert(k, i); {% endcomment %}
-                }
-                {% comment %} $('#counter{{forloop.counter}}').click(function (event) { {% endcomment %}
-                  {% comment %} event.preventDefault(); {% endcomment %}
                   {% comment %} window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()), 'View Ads'); {% endcomment %}
-                {% comment %} }); {% endcomment %}
+                    {% comment %} if (w == 0) { {% endcomment %}
+                        {% comment %} w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank","menubar = 0, scrollbars = 0"); {% endcomment %}
+                    {% comment %} } else if (w != 0) { {% endcomment %}
+                        {% comment %} alert('You closed the advertisement too soon'); {% endcomment %}
+                    {% comment %} } else { {% endcomment %}
+                        {% comment %} alert('window is already opened'); {% endcomment %}
+                    {% comment %} } {% endcomment %}
+                    {% comment %} w.focus(); {% endcomment %}
+
+                    var a = document.getElementById("counter"+k+i), w = [], url, random, i;
+                      for(i = 0; i < a.length; i++){
+                        (function(i){
+                          a[i].onclick = function(e) {
+                            if (!w[i] || w[i].closed) {
+                              url = this.href;
+                              random = Math.floor((Math.random() * 100) + 1);
+                              w[i] = window.open(url, "_blank", random, "menubar = 0, scrollbars = 0");
+                            } else {
+                              console.log('window ' + url + ' is already opened');
+                            }
+                            e.preventDefault();
+                            w[i].focus();
+                          };
+                        })(i);
+                      }
+
+
+                    count = 0;
+                    myInterval = window.setInterval(timerHandler, 1000, k, i);
+                }
             </script>
             {% endfor %}
         {% endfor %}
