@@ -219,17 +219,17 @@ html {
 
                     var a = document.getElementById("counter"+k+i), w = [], url, random, i;
                       for(i = 0; i < a.length; i++){
-                        (function(i){
-                          a[i].onclick = function(e) {
-                            if (!w[i] || w[i].closed) {
+                        (function(iter){
+                          a[iter].onclick = function(e) {
+                            if (!w[iter] || w[iter].closed) {
                               url = this.href;
                               random = Math.floor((Math.random() * 100) + 1);
-                              w[i] = window.open(url, "_blank", random, "menubar = 0, scrollbars = 0");
+                              w[iter] = window.open(url, "_blank", random, "menubar = 0, scrollbars = 0");
                             } else {
                               console.log('window ' + url + ' is already opened');
                             }
                             e.preventDefault();
-                            w[i].focus();
+                            w[iter].focus();
                           };
                         })(i);
                       }
