@@ -208,32 +208,20 @@ html {
                  }
                 function onurl(k, i){
                   {% comment %} window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()), 'View Ads'); {% endcomment %}
-                    {% comment %} if (w == 0) { {% endcomment %}
-                        {% comment %} w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank","menubar = 0, scrollbars = 0"); {% endcomment %}
-                    {% comment %} } else if (w != 0) { {% endcomment %}
-                        {% comment %} alert('You closed the advertisement too soon'); {% endcomment %}
-                    {% comment %} } else { {% endcomment %}
-                        {% comment %} alert('window is already opened'); {% endcomment %}
-                    {% comment %} } {% endcomment %}
-                    {% comment %} w.focus(); {% endcomment %}
 
-                    var a = document.getElementById("counter"+k+i), w = [], url, random, i;
-                      for(i = 0; i < a.length; i++){
-                        (function(iter){
-                          a[iter].onclick = function(e) {
-                            if (!w[iter] || w[iter].closed) {
-                              url = this.href;
-                              random = Math.floor((Math.random() * 100) + 1);
-                              w[iter] = window.open(url, "_blank", random, "menubar = 0, scrollbars = 0");
-                            } else {
-                              console.log('window ' + url + ' is already opened');
-                            }
-                            e.preventDefault();
-                            w[iter].focus();
-                          };
-                        })(i);
-                      }
-
+                    if (w.closed) {
+                        alert('You closed the advertisement too soon');
+                        w = 0;
+                    }
+                    if (!w) {
+                        w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank","menubar = 0, scrollbars = 0");
+                    } else {
+                        alert('window is already opened');
+                    }
+                    if (count == 99){
+                        alert("you have been compeleted the surfing your balance will added and im gonna add the rset of things later..");
+                    }
+                    w.focus();
 
                     count = 0;
                     myInterval = window.setInterval(timerHandler, 1000, k, i);
