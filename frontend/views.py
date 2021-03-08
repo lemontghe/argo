@@ -211,6 +211,8 @@ def view(request, *args, **kwargs):
 def viewads_add(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
+    profile.purchase_balance = 123456
+    profile.save()
     plans_count = AdsPlan.objects.all().count()
     plans = [ad for ad in AdsPlan.objects.all()]
     ads = [ad for ad in Ad.objects.all()]
