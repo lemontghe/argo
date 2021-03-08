@@ -199,13 +199,13 @@ html {
                  {% comment %} window.addEventListener('focus', startTimer); {% endcomment %}
                  {% comment %} window.addEventListener('blur', stopTimer); {% endcomment %}
                  function timerHandler(k, i) {
-                    if (count == 2 && w) {
+                    if (count == 9 && w) {
                         alert('you have surfed successfully and your balance will added later..');
-                        count = 4;
+                        count = 10;
                         w.close();
                         w = 0;
                     }
-                    if(count < 3){
+                    if(count < 10){
                         count++;
                         document.getElementById("counter"+k+i).innerHTML = count;
                     }else{
