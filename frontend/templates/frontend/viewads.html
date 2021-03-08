@@ -25,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/argon-dashboard.css' %}" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" charset="utf-8">
     {% endcompress %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <style>
 html {
@@ -168,8 +167,8 @@ html {
                         {% if error %}
                         {{ error }}
                         {% endif %}
-                        <button id="onurl{{forloop.counter}}" onclick="onurl({{forloop.counter}})" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
-                            <a title="Start browsing the site">  {{a.2}}</a>
+                        <button onClick="return onurl({{forloop.parentloop.counter}}, {{forloop.counter}})" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
+                            <a herf="javascript:void(0)" title="Start browsing the site">  {{a.2}}</a>
                           </button>
                         </h3>
                       </div>
@@ -181,9 +180,9 @@ html {
                       <div class="row">
                         <div class="col-7">
                             <span class="text-default far fa-clock"></span>
-                            <span class="text-default"> {{a.7}} s</span>
+                            <span class="text-default"> {{a.7}}s</span>
                         </div>
-                        <div id="counter{{forloop.counter}}" style="margin: -1.5rem;font-size: 37px;margin-top: -1rem;" data-count="50">0</div>
+                        <div id="counter{{forloop.counter}}" style="margin: -1.5rem;font-size: 37px;margin-top: -1rem;" >0</div>
                         <div class="col-5 text-right text-muted">
                             <span class="fas fa-mouse-pointer" > Left views: </span>
                             <span style="margin-right: -1rem;"> {{a.6}}</span>
@@ -194,35 +193,29 @@ html {
               </div>
             </div>
             <script>
-                function onurl(i){
-                    $('#onurl'+i).click(function (event) {
-                        event.preventDefault();
-                        setTimeout(function(){
-                            a = true;
-                            alert(a);
-                        }, 1000);
-                    });
-                    window.open('{{a.1}}','the Ad','width=400,height=650');
-                    $('#counter'+i).each(function() {
-                      var $this = $(this),
-                          countTo = $this.attr('data-count');
-
-                      $({ countNum: $this.text()}).animate({
-                        countNum: countTo
-                      },
-                      {
-                        duration: 8000,
-                        easing:'linear',
-                        step: function() {
-                          $this.text(Math.floor(this.countNum));
-                        },
-                        complete: function() {
-                          $this.text(this.countNum);
-                        }
-                      });
-
-                    });
+                 {% comment %} var count = 0; {% endcomment %}
+                 {% comment %} var myInterval; {% endcomment %}
+                 {% comment %} window.addEventListener('focus', startTimer); {% endcomment %}
+                 {% comment %} window.addEventListener('blur', stopTimer); {% endcomment %}
+                 {% comment %} function timerHandler() { {% endcomment %}
+                  {% comment %} count++; {% endcomment %}
+                  {% comment %} document.getElementById("counter"+k).innerHTML = count; {% endcomment %}
+                 {% comment %} } {% endcomment %}
+                 {% comment %} function startTimer() { {% endcomment %}
+                  {% comment %} console.log('focus'); {% endcomment %}
+                  {% comment %} myInterval = window.setInterval(timerHandler, 1000); {% endcomment %}
+                 {% comment %} } {% endcomment %}
+                 {% comment %} function stopTimer() { {% endcomment %}
+                  {% comment %} window.clearInterval(myInterval); {% endcomment %}
+                 {% comment %} } {% endcomment %}
+                function onurl(k, i){
+                  window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()), 'View Ads');
+                    {% comment %} alert(k, i); {% endcomment %}
                 }
+                {% comment %} $('#counter{{forloop.counter}}').click(function (event) { {% endcomment %}
+                  {% comment %} event.preventDefault(); {% endcomment %}
+                  {% comment %} window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()), 'View Ads'); {% endcomment %}
+                {% comment %} }); {% endcomment %}
             </script>
             {% endfor %}
         {% endfor %}

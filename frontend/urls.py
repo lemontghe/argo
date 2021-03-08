@@ -17,6 +17,8 @@ urlpatterns = [
     path('recovery/', views.PasswordResetingView.as_view(template_name='frontend/recovery.html'), name="recovery_page"),
     path('terms/', views.terms, name="terms_page"),
 
+    path('view/<str:ads_id><str:ad_id>', views.view, name="view_page"),
+
     path('account/', views.account, name="account_page"),
     path('viewads/', views.viewads, name="viewads_page"),
     path('viewads/add/', views.viewads_add, name="viewads_add_page"),

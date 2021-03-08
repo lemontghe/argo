@@ -162,6 +162,7 @@ def viewads(request, *args, **kwargs):
     user_obj = User.objects.get(username=str(request.user.username))
     profile = Profile.objects.get(user=user_obj)
     profile_count = Profile.objects.count()
+
     ads = []
     for i in range(profile_count):
         p = Profile.objects.get(code=i+1)
@@ -178,6 +179,33 @@ def viewads(request, *args, **kwargs):
         ads.append(a)
     return render(request, 'frontend/viewads.html', {"profile": profile, "ads": ads})
 
+@login_required(login_url='login_page')
+def view(request, *args, **kwargs):
+    ad_id = int(kwargs.get('ad_id'))-1
+    ads_id = int(kwargs.get('ads_id'))-1
+
+    try:
+        user_obj = User.objects.get(username=str(request.user.username))
+        profile = Profile.objects.get(user=user_obj)
+        profile_count = Profile.objects.count()
+
+        ads = []
+        for i in range(profile_count):
+            p = Profile.objects.get(code=i+1)
+            if p.ads in [None, '']: continue
+            a = []
+            adss = save_asList(p, p.ads)
+            for ad in adss:
+                if int(ad[6]) > 0 and "Started" == ad[8]:
+                    if PlansPlan.objects.get(id=1).fee == "fee":
+                        ad[-1] = AdsPlan.objects.get(name=ad[0]).price_per_1
+                    else:
+                        ad[-1] = AdsPlan.objects.get(name=ad[0]).price_per_1-PlansPlan.objects.get(id=1).fee
+                    a.append(ad)
+            ads.append(a)
+        return redirect(ads[ads_id][ad_id][1])
+    except:
+        return redirect('/viewads/')
 
 @login_required(login_url='login_page')
 def viewads_add(request, *args, **kwargs):
