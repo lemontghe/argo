@@ -167,7 +167,7 @@ html {
                         {% if error %}
                         {{ error }}
                         {% endif %}
-                        <button onclick="onurl({{forloop.parentloop.counter}}, {{forloop.counter}});return false;" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
+                        <button onclick="onurl({{forloop.parentloop.counter}}, {{forloop.counter}}, {{a.7}});return false;" onMouseOver="this.style.color='#07114a'" onMouseOut="this.style.color='#5e72e4'" style='color: rgb(94, 114, 228);text-decoration: none;cursor: pointer;font-weight: bold;border: none;background: url("");outline: none;' type="submit">
                             <a title="Start browsing the site">  {{a.2}}</a>
                           </button>
                         </h3>
@@ -199,39 +199,45 @@ html {
                  {% comment %} window.addEventListener('focus', startTimer); {% endcomment %}
                  {% comment %} window.addEventListener('blur', stopTimer); {% endcomment %}
                  function timerHandler(k, i) {
-                    if (count == 9 && w) {
-                        alert('you have surfed successfully and your balance will added later..');
-                        count = 10;
+                    if (count <= 1 && w) {
+                        document.getElementById("counter"+k+i).innerHTML = "You successfully watched the ad and your balance will be updated..";
+                        document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-success");
+                        document.getElementById("counter"+k+i).setAttribute("style", "");
+                        {% comment %} count = c; {% endcomment %}
                         w.close();
-                        w = 0;
+                        {% comment %} w = 0; {% endcomment %}
                     }
-                    if(count < 10){
-                        count++;
+
+                     if(w && w.closed && w > 1){
+                        document.getElementById("counter"+k+i).innerHTML = "You closed the advertisement too soon";
+                        document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-warning");
+                        document.getElementById("counter"+k+i).setAttribute("style", "");
+                        count = 0
+                        {% comment %} w = 9; {% endcomment %}
+                        {% comment %} window.clearInterval(myInterval); {% endcomment %}
+                    }
+                    if(count > 1){
+                        count--;
                         document.getElementById("counter"+k+i).innerHTML = count;
                     }else{
                         window.clearInterval(myInterval);
                     }
                  }
-                function onurl(k, i){
-                    if (w.closed) {
-                        alert('You closed the advertisement too soon');
-                        w = 2;
-                        window.clearInterval(myInterval);
-                    }
-                    if (!w) {
-                        w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank","menubar = 0, scrollbars = 0");
-                        myInterval = window.setInterval(timerHandler, 1000, k, i);
-                    } else {
+                function onurl(k, i, c){
+                    if (!w || w.closed) {
+                        w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank");
+                        count = c;
+                        myInterval = window.setInterval(timerHandler, 1000, k, i, c);
+                    } else{
                         alert('window is already opened');
                     }
-                    w.focus();
+                    {% comment %} w.focus(); {% endcomment %}
 
                 }
             </script>
             {% endfor %}
         {% endfor %}
 
-                    {% comment %} "You closed the advertisement too soon" {% endcomment %}
       </div>
     </div>
 
