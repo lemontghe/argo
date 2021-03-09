@@ -196,8 +196,6 @@ html {
                  var count = 0;
                  var myInterval;
                  var w = 0;
-                 {% comment %} window.addEventListener('focus', startTimer); {% endcomment %}
-                 {% comment %} window.addEventListener('blur', stopTimer); {% endcomment %}
                  function timerHandler(k, i) {
                     if (count <= 1 && w) {
                         document.getElementById("counter"+k+i).innerHTML = "You successfully watched the ad and your balance will be updated..";
