@@ -198,38 +198,37 @@ html {
                  var w = 0;
                  function timerHandler(k, i) {
                     if (count <= 1 && w) {
-                        document.getElementById("counter"+k+i).innerHTML = "You successfully watched the ad and your balance will be updated..";
-                        document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-success");
-                        document.getElementById("counter"+k+i).setAttribute("style", "");
-                        {% comment %} count = c; {% endcomment %}
-                        w.close();
-                        {% comment %} w = 0; {% endcomment %}
+                       document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-success");
+                       document.getElementById("counter"+k+i).setAttribute("style", "");
+                       document.getElementById("counter"+k+i).innerHTML = "You successfully watched the ad and your balance will be updated..";
                     }
 
-                     if(w && w.closed){
-                        document.getElementById("counter"+k+i).innerHTML = "You closed the advertisement too soon";
-                        document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-warning");
-                        document.getElementById("counter"+k+i).setAttribute("style", "");
-                        count = 0
-                        {% comment %} w = 9; {% endcomment %}
-                        {% comment %} window.clearInterval(myInterval); {% endcomment %}
+                    if(w && w.closed){
+                       document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-warning");
+                       document.getElementById("counter"+k+i).setAttribute("style", "");
+                       document.getElementById("counter"+k+i).innerHTML = "You closed the advertisement too soon";
+                       count = 0
+                       {% comment %} w = 9; {% endcomment %}
+                       {% comment %} window.clearInterval(myInterval); {% endcomment %}
                     }
                     if(count > 1){
-                        count--;
-                        document.getElementById("counter"+k+i).innerHTML = count;
+                       count--;
+                       document.getElementById("counter"+k+i).innerHTML = count;
                     }else{
-                        window.clearInterval(myInterval);
+                       window.clearInterval(myInterval);
                     }
                  }
                 function onurl(k, i, c){
                     if (!w || w.closed) {
-                        w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank");
-                        count = c;
-                        myInterval = window.setInterval(timerHandler, 1000, k, i, c);
+                       document.getElementById("counter"+k+i).innerHTML = '';
+                       document.getElementById("counter"+k+i).setAttribute("style", "margin: -1.5rem;font-size: 37px;margin-top: -1rem;");
+                       document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2");
+                       w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank");
+                       count = c;
+                       myInterval = window.setInterval(timerHandler, 1000, k, i, c);
                     } else{
-                        alert('window is already opened');
+                       alert('window is already opened');
                     }
-                    {% comment %} w.focus(); {% endcomment %}
 
                 }
             </script>
