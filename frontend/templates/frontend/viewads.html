@@ -206,7 +206,7 @@ html {
                         {% comment %} w = 0; {% endcomment %}
                     }
 
-                     if(w && w.closed && w > 1){
+                     if(w && w.closed){
                         document.getElementById("counter"+k+i).innerHTML = "You closed the advertisement too soon";
                         document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2 text-warning");
                         document.getElementById("counter"+k+i).setAttribute("style", "");
