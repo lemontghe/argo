@@ -208,8 +208,6 @@ html {
                        document.getElementById("counter"+k+i).setAttribute("style", "");
                        document.getElementById("counter"+k+i).innerHTML = "You closed the advertisement too soon";
                        count = 0
-                       {% comment %} w = 9; {% endcomment %}
-                       {% comment %} window.clearInterval(myInterval); {% endcomment %}
                     }
                     if(count > 1){
                        count--;
@@ -221,7 +219,7 @@ html {
                 function onurl(k, i, c){
                     if (!w || w.closed) {
                        document.getElementById("counter"+k+i).innerHTML = '';
-                       document.getElementById("counter"+k+i).setAttribute("style", "margin: -1.5rem;font-size: 37px;margin-top: -1rem;");
+                       document.getElementById("counter"+k+i).setAttribute("style", "margin: 0rem -2rem 0rem;font-size: 37px;margin-top: -1rem;");
                        document.getElementById("counter"+k+i).setAttribute("class", "text-center mt-2");
                        w = window.open('{% url "view_page" ads_id=1 ad_id=0 %}'.replace(/1/, k.toString()).replace(/0/, i.toString()),"_blank");
                        count = c;
