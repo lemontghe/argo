@@ -163,6 +163,26 @@ def viewads(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     profile_count = Profile.objects.count()
 
+    if request.method == 'POST':
+        if request.is_ajax():
+            try: ads_id = int(list(request.POST)[-2])
+            except: ads_id = 1
+            try: ad_id = int(list(request.POST)[-1])-1
+            except: ad_id = 0
+            p = Profile.objects.get(code=ads_id)
+            if p.ads not in [None, '']:
+                b = save_asList(p, p.ads)
+                fee = PlansPlan.objects.get(id=1).fee
+                price = AdsPlan.objects.get(name=b[ad_id][0]).price_per_1
+                Ad.objects.filter(id=b[ad_id][4]).delete()
+                b[ad_id][-1] = str(fee*price/100)
+                p.balance += fee*price/100
+                b.remove(b[ad_id])
+                save_ads(p, b)
+            return HttpResponse(json.dumps({"success": True, "pb": p.balance}), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+
     ads = []
     for i in range(profile_count):
         p = Profile.objects.get(code=i+1)
@@ -226,12 +246,12 @@ def viewads_add(request, *args, **kwargs):
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
 
-    ch = [ad.name[4:] for ad in AdsPlan.objects.all()]
+    ch = [ad for ad in AdsPlan.objects.all()]
+    numbers = tuple(ch)
     for i in range(plans_count):
         if f'{i+1}' in request.POST:
             no_plan = AdsPlan.objects.get(id=i+1).name
         else:
-            numbers = tuple(ch)
             no_plan = numbers[profile.no_plan-1]
     if plans_count == 0: no_plan = 0
 
@@ -273,6 +293,8 @@ def viewads_add(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
         else:
+
+
             if "stop" in request.POST:
                 if request.is_ajax():
                     no_ad = int(list(request.POST)[-1])-1
@@ -300,7 +322,6 @@ def viewads_add(request, *args, **kwargs):
                     return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
-
             if editsite_form.is_valid():
                 no_ad = int(list(request.POST)[-1])-1
                 if no_ad == "no_plan": no_ad = 0
@@ -308,7 +329,7 @@ def viewads_add(request, *args, **kwargs):
                     profile.url = editsite_form.cleaned_data.get('url')
                     profile.title = editsite_form.cleaned_data.get('title')
                     profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
-                    ch = tuple([ad.name[4:] for ad in AdsPlan.objects.all()])
+                    ch = tuple([ad.name for ad in AdsPlan.objects.all()])
                     no_plan = numbers[profile.no_plan-1]
                     b[no_ad][0] = no_plan
                     b[no_ad][1] = profile.url
@@ -318,7 +339,6 @@ def viewads_add(request, *args, **kwargs):
                     return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-
         save_ads(profile, b)
         return redirect('/viewads/add/')
     else:
