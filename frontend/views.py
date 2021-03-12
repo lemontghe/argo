@@ -237,110 +237,108 @@ def viewads_add(request, *args, **kwargs):
     profile = Profile.objects.get(user=user_obj)
     profile.purchase_balance = 123456
     profile.save()
-    plans_count = AdsPlan.objects.all().count()
     plans = [ad for ad in AdsPlan.objects.all()]
     ads = [ad for ad in Ad.objects.all()]
+    plans_name = tuple([ad.name for ad in AdsPlan.objects.all()])
     details = []
     if profile.no_plan in ['no_plan', None]: profile.no_plan = 0
     if profile.ads in ['ads', None]: profile.ads = ''
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
 
-    plans_id = tuple([ad.name for ad in AdsPlan.objects.all()])
-    for i in range(plans_count):
+    for i in range(len(plans)):
         if f'{i+1}' in request.POST:
             no_plan = AdsPlan.objects.get(id=i+1).name
-        else:
-            no_plan = plans_id[profile.no_plan-1]
-    if plans_count == 0: no_plan = 0
 
-    if request.method == 'POST':
-        addsurf_form = AddSurfForm(request.POST, instance=request.user.profile)
-        editsite_form = EditSiteForm(request.POST, instance=request.user.profile)
-        site_balance_form = SiteBalanceForm(request.POST, instance=request.user.profile)
-        b = save_asList(profile, profile.ads)
-        if site_balance_form.is_valid():
-            if request.is_ajax():
-                no_ad = int(list(request.POST)[-1])-1
-                coin = site_balance_form.cleaned_data.get('coin')
-                ad = ads[no_ad]
-                plan = PlansPlan.objects.get(id=1)
-                if '+' in coin: coin.replace('+', '')
-                if int(coin) <= profile.purchase_balance:
-                    b[no_ad][3] = str(int(b[no_ad][3])+int(coin))
-                    save_ads(profile, b)
-                    profile.purchase_balance -= int(coin)
-                    profile.save()
-                    ad.left_views = int(b[no_ad][3])//AdsPlan.objects.get(name=b[no_ad][0]).price_per_1
-                    b[no_ad][6] = str(ad.left_views)
-                    ad.save()
-                    save_ads(profile, b)
-                    return HttpResponse(json.dumps({"success": True, "sb": b[no_ad][3], "pb": profile.purchase_balance, "lv": ad.left_views}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False, "sb": b[no_ad][3], "pb": profile.purchase_balance}), content_type="application/json")
-        if "no_plan" not in request.POST:
-            if addsurf_form.is_valid():
-                if request.is_ajax():
-                    ad = Ad.objects.create(left_views=0, site_balance=0, viewed=0)
-                    profile.url = addsurf_form.cleaned_data.get('url')
-                    profile.title = addsurf_form.cleaned_data.get('title')
-                    profile.ads += f"{no_plan}ው{profile.url}ው{profile.title}ው{ad.site_balance}ው{ad.id}ው{ad.viewed}ው{ad.left_views}ው{AdsPlan.objects.get(name=no_plan).time}ውStarted"
-                    addsurf_form.save()
-                    profile.save()
-                    b = save_asList(profile, profile.ads)
-                    return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-        else:
-            if "stop" in request.POST:
+    if len(plans):
+        if request.method == 'POST':
+            addsurf_form = AddSurfForm(request.POST, instance=request.user.profile)
+            editsite_form = EditSiteForm(request.POST, instance=request.user.profile)
+            site_balance_form = SiteBalanceForm(request.POST, instance=request.user.profile)
+            b = save_asList(profile, profile.ads)
+            if site_balance_form.is_valid():
                 if request.is_ajax():
                     no_ad = int(list(request.POST)[-1])-1
-                    b[no_ad][-1] = "Stopped"
-                    save_ads(profile, b)
-                    return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
-            if "resume" in request.POST:
-                if request.is_ajax():
-                    no_ad = int(list(request.POST)[-1])-1
-                    b[no_ad][-1] = "Started"
-                    save_ads(profile, b)
-                    return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
-            if "delete" in request.POST:
-                if request.is_ajax():
-                    no_ad = int(list(request.POST)[-1])-1
-                    profile.purchase_balance += int(b[no_ad][3])
-                    Ad.objects.filter(id=b[no_ad][4]).delete()
-                    b.pop(no_ad)
-                    profile.no_plan = 0
-                    save_ads(profile, b)
-                    return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
-            if editsite_form.is_valid():
-                no_ad = int(list(request.POST)[-1])-1
-                if no_ad == "no_plan": no_ad = 0
-                if request.is_ajax():
-                    profile.url = editsite_form.cleaned_data.get('url')
-                    profile.title = editsite_form.cleaned_data.get('title')
-                    profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
-                    no_plan = plans_id[profile.no_plan-1]
-                    b[no_ad][0] = no_plan
-                    b[no_ad][1] = profile.url
-                    b[no_ad][2] = profile.title
-                    profile.save()
-                    save_ads(profile, b)
-                    return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({"success": False}), content_type="application/json")
-        save_ads(profile, b)
-        return redirect('/viewads/add/')
-    else:
-        addsurf_form = AddSurfForm(instance=request.user.profile)
-        editsite_form = EditSiteForm(instance=request.user.profile)
-        site_balance_form = SiteBalanceForm(instance=request.user.profile)
+                    coin = site_balance_form.cleaned_data.get('coin')
+                    ad = ads[no_ad]
+                    plan = PlansPlan.objects.get(id=1)
+                    if '+' in coin: coin.replace('+', '')
+                    if int(coin) <= profile.purchase_balance:
+                        b[no_ad][3] = str(int(b[no_ad][3])+int(coin))
+                        save_ads(profile, b)
+                        profile.purchase_balance -= int(coin)
+                        profile.save()
+                        ad.left_views = int(b[no_ad][3])//AdsPlan.objects.get(name=b[no_ad][0]).price_per_1
+                        b[no_ad][6] = str(ad.left_views)
+                        ad.save()
+                        save_ads(profile, b)
+                        return HttpResponse(json.dumps({"success": True, "sb": b[no_ad][3], "pb": profile.purchase_balance, "lv": ad.left_views}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False, "sb": b[no_ad][3], "pb": profile.purchase_balance}), content_type="application/json")
+            if "no_plan" not in request.POST:
+                if addsurf_form.is_valid():
+                    if request.is_ajax():
+                        ad = Ad.objects.create(left_views=0, site_balance=0, viewed=0)
+                        profile.url = addsurf_form.cleaned_data.get('url')
+                        profile.title = addsurf_form.cleaned_data.get('title')
+                        profile.ads += f"{no_plan}ው{profile.url}ው{profile.title}ው{ad.site_balance}ው{ad.id}ው{ad.viewed}ው{ad.left_views}ው{AdsPlan.objects.get(name=no_plan).time}ውStarted"
+                        addsurf_form.save()
+                        profile.save()
+                        b = save_asList(profile, profile.ads)
+                        return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+            else:
+                if "stop" in request.POST:
+                    if request.is_ajax():
+                        no_ad = int(list(request.POST)[-1])-1
+                        b[no_ad][-1] = "Stopped"
+                        save_ads(profile, b)
+                        return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
+                if "resume" in request.POST:
+                    if request.is_ajax():
+                        no_ad = int(list(request.POST)[-1])-1
+                        b[no_ad][-1] = "Started"
+                        save_ads(profile, b)
+                        return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
+                if "delete" in request.POST:
+                    if request.is_ajax():
+                        no_ad = int(list(request.POST)[-1])-1
+                        profile.purchase_balance += int(b[no_ad][3])
+                        Ad.objects.filter(id=b[no_ad][4]).delete()
+                        b.pop(no_ad)
+                        profile.no_plan = 0
+                        save_ads(profile, b)
+                        return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False, }), content_type="application/json")
+                if editsite_form.is_valid():
+                    no_ad = list(request.POST)[-1]
+                    if no_ad == "no_plan": no_ad = 0
+                    else: no_ad = int(no_ad)-1
+                    if request.is_ajax():
+                        profile.url = editsite_form.cleaned_data.get('url')
+                        profile.title = editsite_form.cleaned_data.get('title')
+                        profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
+                        no_plan = plans_name[profile.no_plan-1]
+                        b[no_ad][0] = no_plan
+                        b[no_ad][1] = profile.url
+                        b[no_ad][2] = profile.title
+                        profile.save()
+                        save_ads(profile, b)
+                        return HttpResponse(json.dumps({"success": True, "ads": b}), content_type="application/json")
+                    else:
+                        return HttpResponse(json.dumps({"success": False}), content_type="application/json")
+            save_ads(profile, b)
+            return redirect('/viewads/add/')
+
+    addsurf_form = AddSurfForm(instance=request.user.profile)
+    editsite_form = EditSiteForm(instance=request.user.profile)
+    site_balance_form = SiteBalanceForm(instance=request.user.profile)
 
     b = save_asList(profile, profile.ads)
     profile.save()
