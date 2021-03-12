@@ -65,7 +65,6 @@ class AdsPlan(models.Model):
 class PlansPlan(models.Model):
     per_hour = models.FloatField(default=0.00)
     fee = models.FloatField(default=0.00, max_length=2)
-    newfield = models.FloatField(default=0.00, max_length=2)
 
     def __str__(self):
         return f"Investment plan"
