@@ -246,13 +246,12 @@ def viewads_add(request, *args, **kwargs):
     if profile.url in ['url', None]: profile.ads = ''
     if profile.title in ['title', None]: profile.ads = ''
 
-    ch = [ad for ad in AdsPlan.objects.all()]
-    numbers = tuple(ch)
+    plans_id = tuple([ad.name for ad in AdsPlan.objects.all()])
     for i in range(plans_count):
         if f'{i+1}' in request.POST:
             no_plan = AdsPlan.objects.get(id=i+1).name
         else:
-            no_plan = numbers[profile.no_plan-1]
+            no_plan = plans_id[profile.no_plan-1]
     if plans_count == 0: no_plan = 0
 
     if request.method == 'POST':
@@ -293,8 +292,6 @@ def viewads_add(request, *args, **kwargs):
                 else:
                     return HttpResponse(json.dumps({"success": False}), content_type="application/json")
         else:
-
-
             if "stop" in request.POST:
                 if request.is_ajax():
                     no_ad = int(list(request.POST)[-1])-1
@@ -329,8 +326,7 @@ def viewads_add(request, *args, **kwargs):
                     profile.url = editsite_form.cleaned_data.get('url')
                     profile.title = editsite_form.cleaned_data.get('title')
                     profile.no_plan = int(editsite_form.cleaned_data.get('no_plan'))
-                    ch = tuple([ad.name for ad in AdsPlan.objects.all()])
-                    no_plan = numbers[profile.no_plan-1]
+                    no_plan = plans_id[profile.no_plan-1]
                     b[no_ad][0] = no_plan
                     b[no_ad][1] = profile.url
                     b[no_ad][2] = profile.title
